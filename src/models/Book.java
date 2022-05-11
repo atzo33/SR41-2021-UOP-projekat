@@ -113,6 +113,14 @@ public class Book {
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
+	@Override
+	public String toString() {
+		return "Book [title=" + title + ", originalTitle=" + originalTitle + ", writer=" + writer + ", releaseDate="
+				+ releaseDate + ", description=" + description + ", id=" + id + ", genre=" + genre + ", language="
+				+ language + ", isDeleted=" + isDeleted + "]";
+	}
+	
 	
 	
 	

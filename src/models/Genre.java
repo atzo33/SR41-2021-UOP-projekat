@@ -37,5 +37,10 @@ public String getId() {
 public void setId(String id) {
 	this.id = id;
 }
+@Override
+public String toString() {
+	return "Genre [name=" + name + ", description=" + description + ", id=" + id + "]";
+}
+
 }
 

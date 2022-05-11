@@ -12,15 +12,19 @@ public class Admin extends Staff{
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	@Override
 	public String toString() {
 		return "Admin [username=" + username + ", password=" + password + ", paycheck=" + paycheck + ", id=" + id
-				+ ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + ", isDeleted="
-				+ isDeleted + "]";
+				+ ", firstName=" + firstName + ", lastName=" + lastName + ", adress=" + adress + ", gender=" + gender
+				+ ", isDeleted=" + isDeleted + "]";
 	}
+
 	public void regNewEmployee() {
 		
 	}
+	
+	
 	
 
 }
