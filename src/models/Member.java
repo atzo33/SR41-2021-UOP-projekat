@@ -2,6 +2,8 @@ package models;
 
 import java.time.LocalDate;
 
+import ennumerations.Gender;
+
 public class Member extends User {
 	protected String cardNumber;
 	protected LocalDate lastMembershipExtension;
@@ -10,6 +12,7 @@ public class Member extends User {
 	protected MembershipCost membership;
 	
 	public Member() {
+		super();
 		this.cardNumber = "";
 		this.lastMembershipExtension = null;
 		this.membershipDuration = -1;
@@ -17,8 +20,11 @@ public class Member extends User {
 		this.membership=null;
 		
 	}
-	public Member(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership) {
-		super();
+	
+	
+
+	public Member(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted) {
+		super(firstName, lastName, adress, id, gender, isDeleted);
 		this.cardNumber = cardNumber;
 		this.lastMembershipExtension = lastMembershipExtension;
 		this.membershipDuration = membershipDuration;

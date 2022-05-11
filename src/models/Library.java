@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import ennumerations.Gender;
 import ennumerations.Language;
 
 public class Library {
@@ -293,22 +294,18 @@ public class Library {
     
     
     
-//    protected String cardNumber;
-//	protected LocalDate lastMembershipExtension;
-//	protected int membershipDuration;
-//	protected boolean isActive;
-//	protected MembershipCost membership;
+
     
     private String preWritingMember(Member member) {
-        return String.format("%s|%s|%s|%s|%s\n", member.getCardNumber(), member.getLastMembershipExtension(), member.getMembershipDuration(),
-        		member.isActive,member.getMembership());
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n", member.getCardNumber(), member.getLastMembershipExtension(), member.getMembershipDuration(),
+        		member.isActive,member.getMembership(),member.getFirstName(),member.getLastName(),member.getAdress(),member.getId(),member.getGender(),member.isDeleted());
     }
     
     public void writeMember(ArrayList<Member> allMembers) {
         try {
             
             BufferedWriter membersFile = new BufferedWriter(new FileWriter("src/text/members.txt"));
-            for(Member g: allMembers) {
+            for(Member m: allMembers) {
                 
                 membersFile.write(this.preWritingGenre(m));
             }membersFile.close();
@@ -318,6 +315,8 @@ public class Library {
     
     
     public ArrayList<Member> readMembers(){
+    	
+//      1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,4. boolean isActive,5.MembershipCost membership,5.String firstName,6. String lastName,7. String adress,8. String id,9. Gender gender,10. boolean isDeleted
         
         try {
             File membersFile = new File("src/text/members.txt");
@@ -325,9 +324,20 @@ public class Library {
             String line;
             while((line = reader.readLine()) != null) {
                 String[] splitLines = line.split("\\|");
-                String name = splitLines[0];
-                String description = splitLines[1];
-                String id = splitLines[2];
+                String cardNumber = splitLines[0];
+                LocalDate lastMembershipExtension =LocalDate.parse(splitLines[1]);
+                int id = Integer.parseInt(splitLines[2]);
+                boolean isActive=Boolean.parseBoolean(splitLines[3]);
+                MembershipCost membership=splitLines[4];
+                String firstName=splitLines[5];
+                String lastName=splitLines[6];
+                String adress=splitLines[7];
+                String id=splitLines[8];
+                Gender gender=splitLines[9];
+                boolean isDeleted=Boolean.parseBoolean(splitLines[10]);
+                
+                
+          
                 Genre genre = new Genre(name,description,id);
                 allGenres.add(genre);
                 
