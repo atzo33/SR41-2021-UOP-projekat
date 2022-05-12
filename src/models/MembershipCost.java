@@ -42,6 +42,12 @@ public class MembershipCost {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+
+	@Override
+	public String toString() {
+		return "MembershipCost [id=" + id + ", type=" + type + ", price=" + price + "]";
+	}
+	
 	
 	
 	

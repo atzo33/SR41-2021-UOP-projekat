@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
 
@@ -293,21 +294,65 @@ public class Library {
     
     
     
+    private String preWritingMembershipCost(MembershipCost membership) {
+        return String.format("%s|%s|%s\n", membership.getId(), membership.getType(), membership.getPrice());
+    }
+    
+    public void writeMembershipCost(ArrayList<MembershipCost> allMemberships) {
+        try {
+            
+            BufferedWriter membershipFile = new BufferedWriter(new FileWriter("src/text/memberships.txt"));
+            for(MembershipCost me: allMemberships) {
+                
+                membershipFile.write(this.preWritingMembershipCost(me));
+            }membershipFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    public ArrayList<MembershipCost> readMembershipCost(){
+        
+        try {
+            File membershipFile = new File("src/text/memberships.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(membershipFile));
+            String line;
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                String id = splitLines[0];
+                String type = splitLines[1];
+                double price =Double.parseDouble(splitLines[2]) ;
+                MembershipCost membership = new MembershipCost(id,type,price);
+                allTypes.add(membership);
+                
+            }
+            reader.close();
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return allTypes;
+        
+    } 
+    
+    
+    
+    
     
 
     
     private String preWritingMember(Member member) {
         return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n", member.getCardNumber(), member.getLastMembershipExtension(), member.getMembershipDuration(),
-        		member.isActive,member.getMembership(),member.getFirstName(),member.getLastName(),member.getAdress(),member.getId(),member.getGender(),member.isDeleted());
+        		member.isActive,member.getMembership().getId(),member.getFirstName(),member.getLastName(),member.getAdress(),member.getId(),member.getGender(),member.isDeleted());
     }
     
-    public void writeMember(ArrayList<Member> allMembers) {
+    public void writeMembers(ArrayList<Member> allMembers) {
         try {
             
             BufferedWriter membersFile = new BufferedWriter(new FileWriter("src/text/members.txt"));
             for(Member m: allMembers) {
                 
-                membersFile.write(this.preWritingGenre(m));
+                membersFile.write(this.preWritingMember(m));
             }membersFile.close();
             
         }catch(IOException e) { e.printStackTrace(); }
@@ -316,7 +361,9 @@ public class Library {
     
     public ArrayList<Member> readMembers(){
     	
-//      1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,4. boolean isActive,5.MembershipCost membership,5.String firstName,6. String lastName,7. String adress,8. String id,9. Gender gender,10. boolean isDeleted
+////      1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,
+//    	4. boolean isActive,5.MembershipCost membership,5.String firstName,6.
+//    	String lastName,7. String adress,8. String id,9. Gender gender,10. boolean isDeleted
         
         try {
             File membersFile = new File("src/text/members.txt");
@@ -326,20 +373,33 @@ public class Library {
                 String[] splitLines = line.split("\\|");
                 String cardNumber = splitLines[0];
                 LocalDate lastMembershipExtension =LocalDate.parse(splitLines[1]);
-                int id = Integer.parseInt(splitLines[2]);
+                int membershipDuration = Integer.parseInt(splitLines[2]);
                 boolean isActive=Boolean.parseBoolean(splitLines[3]);
-                MembershipCost membership=splitLines[4];
+                MembershipCost membership=null;
+                
+                for(MembershipCost m : this.allTypes){
+                if(m.getId().equals(splitLines[4]))
+                	
+                membership=m;
+                
+                }
+                
                 String firstName=splitLines[5];
                 String lastName=splitLines[6];
                 String adress=splitLines[7];
                 String id=splitLines[8];
-                Gender gender=splitLines[9];
+                Gender gender=Gender.valueOf(splitLines[9]);
                 boolean isDeleted=Boolean.parseBoolean(splitLines[10]);
                 
                 
+////            1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,
+//            	4. boolean isActive,5.MembershipCost membership,5.String firstName,6.
+//            	String lastName,7. String adress,8. String id,9. Gender gender,10. boolean isDeleted
+                
+                
           
-                Genre genre = new Genre(name,description,id);
-                allGenres.add(genre);
+                Member member = new Member(cardNumber,lastMembershipExtension,membershipDuration,isActive,membership,firstName,lastName,adress,id,gender,isDeleted);
+                allMembers.add(member);
                 
             }
             reader.close();
@@ -348,9 +408,117 @@ public class Library {
             e.printStackTrace();
         
     }
-        return allGenres;
+        return allMembers;
         
     } 
+    
+    
+    
+    
+// int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+//	Language language, boolean isDeleted  	 
+    
+    private String preWritingCopyOfABook(CopyOfABook copyOfABook) {
+        return String.format("%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember());
+    }
+    
+    public void writeRentABook(ArrayList<RentABook> allRents) {
+        try {
+            
+            BufferedWriter rentsFile = new BufferedWriter(new FileWriter("src/text/rents.txt"));
+            for(RentABook r: allRents) {
+                
+                rentsFile.write(this.preWritingGenre(r));
+            }rentsFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    public ArrayList<RentABook> readRentABook(){
+        
+        try {
+            File rentsFile = new File("src/text/rents.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(rentsFile));
+            String line;
+            
+// LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
+
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                LocalDate rentalDate=LocalDate.parse(splitLines[0]) ;
+                LocalDate returningDate=LocalDate.parse(splitLines[1]);
+                CopyOfABook copyOfABook= splitLines[2];
+                Staff staff=splitLines[3];
+                Member member=splitLines[4];
+                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member);
+                allRents.add(rentABook);
+                
+            }
+            reader.close();
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return allRents;
+        
+    } 
+    
+    
+    
+    
+    
+    
+    
+//    LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
+    
+    private String preWritingRentABook(RentABook rentABook) {
+        return String.format("%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember());
+    }
+    
+    public void writeRentABook(ArrayList<RentABook> allRents) {
+        try {
+            
+            BufferedWriter rentsFile = new BufferedWriter(new FileWriter("src/text/rents.txt"));
+            for(RentABook r: allRents) {
+                
+                rentsFile.write(this.preWritingGenre(r));
+            }rentsFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    public ArrayList<RentABook> readRentABook(){
+        
+        try {
+            File rentsFile = new File("src/text/rents.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(rentsFile));
+            String line;
+            
+// LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
+
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                LocalDate rentalDate=LocalDate.parse(splitLines[0]) ;
+                LocalDate returningDate=LocalDate.parse(splitLines[1]);
+                CopyOfABook copyOfABook= splitLines[2];
+                Staff staff=splitLines[3];
+                Member member=splitLines[4];
+                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member);
+                allRents.add(rentABook);
+                
+            }
+            reader.close();
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return allRents;
+        
+    } 
+    
+    
 	
     
     

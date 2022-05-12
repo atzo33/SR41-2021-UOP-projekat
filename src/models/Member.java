@@ -61,6 +61,17 @@ public class Member extends User {
 	public void setMembership(MembershipCost membership) {
 		this.membership = membership;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Member [cardNumber=" + cardNumber + ", lastMembershipExtension=" + lastMembershipExtension
+				+ ", membershipDuration=" + membershipDuration + ", isActive=" + isActive + ", membership=" + membership
+				+ "]";
+	}
+	
+	
 	
 	
 
