@@ -67,6 +67,14 @@ public class RentABook {
 	public void setMember(Member member) {
 		this.member = member;
 	}
+
+	@Override
+	public String toString() {
+		return "RentABook [rentalDate=" + rentalDate + ", returningDate=" + returningDate + ", copyOfABook="
+				+ copyOfABook + ", staff=" + staff + ", member=" + member + "]";
+	}
+	
+	
 	
 	
 	

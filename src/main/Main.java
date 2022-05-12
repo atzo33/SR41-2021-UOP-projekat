@@ -11,7 +11,7 @@ import models.*;
 public class Main {
 
 	public static void main(String[] args) {
-		Library library=new Library();
+		Library library=new Library("Library of Atzo", "Varraghova 14", "non-stop", "1-234567-789", "789456");
 		
 		Genre genre=new Genre("Comedy","This is funny","00001");
 		ArrayList<Genre>allGenres=new ArrayList<Genre>();
@@ -53,21 +53,51 @@ public class Main {
 			
 			CopyOfABook copyOfABook=new CopyOfABook(500, 1997, true, "9595",Binding.HARD,book,
 					 Language.SERBIAN,false);
+			System.out.println(copyOfABook);
 			ArrayList<CopyOfABook>allCopies=new ArrayList<CopyOfABook>();
 			allCopies.add(copyOfABook);
+			System.out.println(allCopies);
 			library.writeCopyOfABook(allCopies);
 			System.out.println(library.readCopyOfABook());
 			
 			
 			
+			Admin admin=new Admin("Vaaragh", "VeryStrongPassword", 54.3,"788123");
+			ArrayList<Admin>allAdmins=new ArrayList<Admin>();
+			allAdmins.add(admin);
+			library.writeAdmin(allAdmins);
+			System.out.println(library.readAdmin());
 			
 			
-			
-			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,staff,member);
+			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,admin,member);
 			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
 			allRents.add(rentABook);
 			library.writeRentABook(allRents);
 			System.out.println(library.readRentABook());
+			
+			
+			
+			
+			
+			
+			
+			
+			Librarian librarian=new Librarian("VaaraghSmallVersion", "VeryWeakPassword", 154.3,"78812223");
+			ArrayList<Librarian>allLibrarians=new ArrayList<Librarian>();
+			allLibrarians.add(librarian);
+			library.writeLibrarian(allLibrarians);
+			System.out.println(library.readLibrarian());
+			
+			
+			
+			
+			
+//			Library library=new Library("Library of master Atzo","Bonka Zvogdana 33","00-24", "123-456-666", "1");
+			
+			library.writeLibrary();
+			library.readLibrary();
+			
+			
 			
 			
 			

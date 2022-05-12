@@ -430,7 +430,7 @@ public class Library {
 //	Language language, boolean isDeleted  	 
     
     private String preWritingCopyOfABook(CopyOfABook copyOfABook) {
-        return String.format("%s|%s|%s|%s|%s|%s|%s|%s\n", copyOfABook.getPageNumbers(), copyOfABook.getPrintingYear(),copyOfABook.isRented(),copyOfABook.isRented(),
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%s\n", copyOfABook.getPageNumbers(), copyOfABook.getPrintingYear(),copyOfABook.isRented(),
         		copyOfABook.getId(),copyOfABook.getBinding(),copyOfABook.getBook(),copyOfABook.getLanguage(),copyOfABook.isDeleted());
     }
     
@@ -439,7 +439,8 @@ public class Library {
             
             BufferedWriter copiesFile = new BufferedWriter(new FileWriter("src/text/copies.txt"));
             for(CopyOfABook c: allCopies) {
-                
+                String line=preWritingCopyOfABook(c);
+                System.out.println(line);
                 copiesFile.write(this.preWritingCopyOfABook(c));
             }copiesFile.close();
             

@@ -101,6 +101,14 @@ public class CopyOfABook {
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+
+	@Override
+	public String toString() {
+		return "CopyOfABook [pageNumbers=" + pageNumbers + ", printingYear=" + printingYear + ", isRented=" + isRented
+				+ ", id=" + id + ", binding=" + binding + ", book=" + book + ", language=" + language + ", isDeleted="
+				+ isDeleted + "]";
+	}
+	
 	
 	
 	
