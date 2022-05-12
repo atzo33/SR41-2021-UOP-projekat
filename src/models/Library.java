@@ -41,6 +41,8 @@ public class Library {
     
     private ArrayList<RentABook> allRents = new ArrayList<RentABook>();
     
+    private ArrayList<Staff> allStaff = new ArrayList<Staff>();
+    
     public Library() {
     	this.name = "";
 		this.address = "";
@@ -49,6 +51,15 @@ public class Library {
 		this.id = "";
     	
     }
+    
+	public Library(String name, String address, String workingHours, String phoneNumber, String id) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.workingHours = workingHours;
+		this.phoneNumber = phoneNumber;
+		this.id = id;
+	}
 
 	public Library(String name, String address, String workingHours, String phoneNumber, String id,ArrayList<Book> allBooks,
 			ArrayList<Member> allMembers,ArrayList<Librarian> allLibrarians,ArrayList<Admin> allAdmins,ArrayList<CopyOfABook> allCopies,
@@ -419,39 +430,49 @@ public class Library {
 //	Language language, boolean isDeleted  	 
     
     private String preWritingCopyOfABook(CopyOfABook copyOfABook) {
-        return String.format("%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember());
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%s\n", copyOfABook.getPageNumbers(), copyOfABook.getPrintingYear(),copyOfABook.isRented(),copyOfABook.isRented(),
+        		copyOfABook.getId(),copyOfABook.getBinding(),copyOfABook.getBook(),copyOfABook.getLanguage(),copyOfABook.isDeleted());
     }
     
-    public void writeRentABook(ArrayList<RentABook> allRents) {
+    public void writeCopyOfABook(ArrayList<CopyOfABook> allCopies) {
         try {
             
-            BufferedWriter rentsFile = new BufferedWriter(new FileWriter("src/text/rents.txt"));
-            for(RentABook r: allRents) {
+            BufferedWriter copiesFile = new BufferedWriter(new FileWriter("src/text/copies.txt"));
+            for(CopyOfABook c: allCopies) {
                 
-                rentsFile.write(this.preWritingGenre(r));
-            }rentsFile.close();
+                copiesFile.write(this.preWritingCopyOfABook(c));
+            }copiesFile.close();
             
         }catch(IOException e) { e.printStackTrace(); }
     }
     
-    public ArrayList<RentABook> readRentABook(){
+    public ArrayList<CopyOfABook> readCopyOfABook(){
         
         try {
-            File rentsFile = new File("src/text/rents.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(rentsFile));
+            File copiesFile = new File("src/text/copies.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(copiesFile));
             String line;
             
-// LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
+ //int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+// Language language, boolean isDeleted 
 
             while((line = reader.readLine()) != null) {
                 String[] splitLines = line.split("\\|");
-                LocalDate rentalDate=LocalDate.parse(splitLines[0]) ;
-                LocalDate returningDate=LocalDate.parse(splitLines[1]);
-                CopyOfABook copyOfABook= splitLines[2];
-                Staff staff=splitLines[3];
-                Member member=splitLines[4];
-                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member);
-                allRents.add(rentABook);
+                int pageNumbers=Integer.valueOf(splitLines[0]) ;
+                int printingYear=Integer.valueOf(splitLines[1]);
+                boolean isRented =Boolean.parseBoolean(splitLines[2]);
+                String id=splitLines[3];
+                Binding binding=Binding.valueOf(splitLines[4]);
+                Book book=null;
+                for(Book bo:allBooks) {
+                	if (bo.getId().equals(splitLines[5]))
+                	book=bo;
+                }            
+                Language language=Language.valueOf(splitLines[6]);
+                boolean isDeleted=Boolean.parseBoolean(splitLines[7]);
+                CopyOfABook copyOfABook = new CopyOfABook(pageNumbers,printingYear,isRented,id,binding,book,language,isDeleted);
+                allCopies.add(copyOfABook);
+
                 
             }
             reader.close();
@@ -460,7 +481,7 @@ public class Library {
             e.printStackTrace();
         
     }
-        return allRents;
+        return allCopies;
         
     } 
     
@@ -471,7 +492,16 @@ public class Library {
     
     
 //    LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
-    
+   
+    private void getallStaff(){
+    	for(Admin a:allAdmins) {
+    		allStaff.add(a);
+    		
+    	}
+    	for (Librarian l:allLibrarians) {
+    		allStaff.add(l);
+    	}
+    }
     private String preWritingRentABook(RentABook rentABook) {
         return String.format("%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember());
     }
@@ -482,7 +512,7 @@ public class Library {
             BufferedWriter rentsFile = new BufferedWriter(new FileWriter("src/text/rents.txt"));
             for(RentABook r: allRents) {
                 
-                rentsFile.write(this.preWritingGenre(r));
+                rentsFile.write(this.preWritingRentABook(r));
             }rentsFile.close();
             
         }catch(IOException e) { e.printStackTrace(); }
@@ -501,9 +531,22 @@ public class Library {
                 String[] splitLines = line.split("\\|");
                 LocalDate rentalDate=LocalDate.parse(splitLines[0]) ;
                 LocalDate returningDate=LocalDate.parse(splitLines[1]);
-                CopyOfABook copyOfABook= splitLines[2];
-                Staff staff=splitLines[3];
-                Member member=splitLines[4];
+                CopyOfABook copyOfABook= null;
+                for(CopyOfABook cob:allCopies) {
+                	if (cob.getId().equals(splitLines[2]))
+                	copyOfABook=cob;
+                }
+                Staff staff=null;
+                for(Staff s:allStaff) {
+                	if (s.getId().equals(splitLines[3]))
+                	staff=s;
+                }
+                Member member=null;
+                for(Member me:allMembers) {
+                	if (me.getId().equals(splitLines[4]))
+                	member=me;
+                }
+                
                 RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member);
                 allRents.add(rentABook);
                 
@@ -517,6 +560,175 @@ public class Library {
         return allRents;
         
     } 
+    
+    
+    
+//    String username, String password, double paycheck, String id
+    private String preWritingAdmin(Admin admin) {
+        return String.format("%s|%s|%s|%s\n", admin.getUsername(), admin.getPassword(), admin.getPaycheck(),admin.getId());
+    }
+    
+    public void writeAdmin(ArrayList<Admin> allAdmins) {
+        try {
+            
+            BufferedWriter adminFile = new BufferedWriter(new FileWriter("src/text/admins.txt"));
+            for(Admin ad: allAdmins) {
+                
+                adminFile.write(this.preWritingAdmin(ad));
+            }adminFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    
+//  String username, String password, double paycheck, String id
+    public ArrayList<Admin> readAdmin(){
+        
+        try {
+            File adminFile = new File("src/text/admins.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(adminFile));
+            String line;
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                String username = splitLines[0];
+                String password = splitLines[1];
+                double paycheck=Double.parseDouble(splitLines[2]) ;
+                String id= splitLines[3];
+                Admin admin = new Admin(username,password,paycheck,id);
+                allAdmins.add(admin);
+                
+            }
+            reader.close();
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return allAdmins;
+        
+    } 
+    
+    
+    
+    
+    
+    
+    private String preWritingLibrarian(Librarian librarian) {
+        return String.format("%s|%s|%s|%s\n", librarian.getUsername(), librarian.getPassword(), librarian.getPaycheck(),librarian.getId());
+    }
+    
+    public void writeLibrarian(ArrayList<Librarian> allALibrarians) {
+        try {
+            
+            BufferedWriter librarianFile = new BufferedWriter(new FileWriter("src/text/librarians.txt"));
+            for(Librarian li: allLibrarians) {
+                
+                librarianFile.write(this.preWritingLibrarian(li));
+            }librarianFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    
+//  String username, String password, double paycheck, String id
+    public ArrayList<Librarian> readLibrarian(){
+        
+        try {
+            File librarianFile = new File("src/text/librarians.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(librarianFile));
+            String line;
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                String username = splitLines[0];
+                String password = splitLines[1];
+                double paycheck=Double.parseDouble(splitLines[2]) ;
+                String id= splitLines[3];
+                Librarian librarian = new Librarian(username,password,paycheck,id);
+                allLibrarians.add(librarian);
+                
+            }
+            reader.close();
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return allLibrarians;
+        
+    } 
+    
+    
+    
+    
+    
+    
+    
+    
+    private String preWritingLibrary() {
+        return String.format("%s|%s|%s|%s|%s\n", this.getAddress(),this.getName(),this.getPhoneNumber(),this.getWorkingHours() ,this.getId());
+    }
+    
+    public void writeLibrary() {
+        try {
+            
+            BufferedWriter libraryFile = new BufferedWriter(new FileWriter("src/text/library.txt"));
+            libraryFile.write(this.preWritingLibrary());
+            
+            libraryFile.close();
+            
+        }catch(IOException e) { e.printStackTrace(); }
+    }
+    
+    
+//  String username, String password, double paycheck, String id
+    public static Library readLibrary(){
+        Library libraryRet=null;
+        try {
+            File libraryFile = new File("src/text/library.txt");
+            BufferedReader reader = new BufferedReader(new FileReader(libraryFile));
+            String line;
+            while((line = reader.readLine()) != null) {
+                String[] splitLines = line.split("\\|");
+                String adress = splitLines[0];
+                String name = splitLines[1];
+                String phoneNumber=splitLines[2] ;
+                String workingHours= splitLines[3];
+                String id=splitLines[4];
+                Library library = new Library(adress,name,phoneNumber,workingHours,id);
+               
+                libraryRet=library;   
+            }
+            
+//this.getAddress(),this.getName(),this.getPhoneNumber(),this.getWorkingHours() ,this.getId());
+            reader.close();
+            
+            
+        }catch(IOException e) {
+            e.printStackTrace();
+        
+    }
+        return libraryRet;    
+        
+    } 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 	

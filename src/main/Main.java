@@ -3,6 +3,7 @@ package main;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
 import models.*;
@@ -45,11 +46,39 @@ public class Main {
 			allMembers.add(member);
 			library.writeMembers(allMembers);
 			System.out.println(library.readMembers());
+			
+
+
+			
+			
+			CopyOfABook copyOfABook=new CopyOfABook(500, 1997, true, "9595",Binding.HARD,book,
+					 Language.SERBIAN,false);
+			ArrayList<CopyOfABook>allCopies=new ArrayList<CopyOfABook>();
+			allCopies.add(copyOfABook);
+			library.writeCopyOfABook(allCopies);
+			System.out.println(library.readCopyOfABook());
+			
+			
+			
+			
+			
+			
+			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,staff,member);
+			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
+			allRents.add(rentABook);
+			library.writeRentABook(allRents);
+			System.out.println(library.readRentABook());
+			
+			
+			
+			
+			
 				
-		
-		
-
-
 	}
+	
+	
+	
+	
+	
 
 }
