@@ -18,13 +18,14 @@ public class Member extends User {
 		this.membershipDuration = -1;
 		this.isActive = true;
 		this.membership=null;
+		this.JMBG="";
 		
 	}
 	
 	
 
-	public Member(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted) {
-		super(firstName, lastName, adress, id, gender, isDeleted);
+	public Member(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
+		super(firstName, lastName, adress, id, gender, isDeleted,JMBG);
 		this.cardNumber = cardNumber;
 		this.lastMembershipExtension = lastMembershipExtension;
 		this.membershipDuration = membershipDuration;
@@ -66,7 +67,7 @@ public class Member extends User {
 
 	@Override
 	public String toString() {
-		return "Member [cardNumber=" + cardNumber + ", lastMembershipExtension=" + lastMembershipExtension
+		return "Member [cardNumber=" + this.getFirstName()+ ", lastMembershipExtension=" + lastMembershipExtension
 				+ ", membershipDuration=" + membershipDuration + ", isActive=" + isActive + ", membership=" + membership
 				+ "]";
 	}

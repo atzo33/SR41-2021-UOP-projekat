@@ -9,19 +9,20 @@ public abstract class User {
 	protected String id;
 	protected Gender gender;
 	protected boolean isDeleted;
+	protected String JMBG;
 	
 	public User() {
 		this.firstName="";
 		this.lastName="";
 		this.adress="";
 		this.id="";
-		this.gender=null;
-		this.id="";
+		this.gender=null;		
 		this.isDeleted=false;
+		this.JMBG="";
 				
 		
 	}
-	public User(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted) {
+	public User(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -29,6 +30,7 @@ public abstract class User {
 		this.id = id;
 		this.gender = gender;
 		this.isDeleted = isDeleted;
+		this.JMBG=JMBG;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -65,6 +67,12 @@ public abstract class User {
 	}
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+	public String getJMBG() {
+		return JMBG;
+	}
+	public void setJMBG(String jMBG) {
+		JMBG = jMBG;
 	}
 	
 	

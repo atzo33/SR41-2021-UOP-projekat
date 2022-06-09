@@ -1,25 +1,40 @@
 package models;
 
+import ennumerations.Gender;
+
 public abstract class Staff extends User {
 	protected String username;
 	protected String password;
 	protected double paycheck;
-	protected String id;
+	protected Library library;
+
 	public Staff() {
 		this.username="";
 		this.password ="";
 		this.paycheck = -1;
-		this.id = "";
+		this.library=null;
+		
 		
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Staff(String username, String password, double paycheck, String id) {
+	
+	public Staff(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+		super(firstName, lastName, adress, id, gender, isDeleted,JMBG);
+		
+		this.username = username;
+		this.password = password;
+		this.paycheck = paycheck;
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public Staff(String username, String password, double paycheck) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.paycheck = paycheck;
-		this.id = id;
+		
 	}
 
 	public String getUsername() {
@@ -56,6 +71,17 @@ public abstract class Staff extends User {
 	public void addMember() {
 		
 	}
+
+
+	public Library getLibrary() {
+		return library;
+	}
+
+
+	public void setLibrary(Library library) {
+		this.library = library;
+	}
+	
 	
 	
 

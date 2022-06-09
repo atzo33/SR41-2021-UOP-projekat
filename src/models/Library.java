@@ -353,8 +353,8 @@ public class Library {
 
     
     private String preWritingMember(Member member) {
-        return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n", member.getCardNumber(), member.getLastMembershipExtension(), member.getMembershipDuration(),
-        		member.isActive,member.getMembership().getId(),member.getFirstName(),member.getLastName(),member.getAdress(),member.getId(),member.getGender(),member.isDeleted());
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n", member.getCardNumber(), member.getLastMembershipExtension(), member.getMembershipDuration(),
+        		member.isActive,member.getMembership().getId(),member.getFirstName(),member.getLastName(),member.getAdress(),member.getId(),member.getGender(),member.isDeleted(),member.getJMBG());
     }
     
     public void writeMembers(ArrayList<Member> allMembers) {
@@ -401,7 +401,7 @@ public class Library {
                 String id=splitLines[8];
                 Gender gender=Gender.valueOf(splitLines[9]);
                 boolean isDeleted=Boolean.parseBoolean(splitLines[10]);
-                
+                String JMBG=splitLines[11];
                 
 ////            1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,
 //            	4. boolean isActive,5.MembershipCost membership,5.String firstName,6.
@@ -409,7 +409,7 @@ public class Library {
                 
                 
           
-                Member member = new Member(cardNumber,lastMembershipExtension,membershipDuration,isActive,membership,firstName,lastName,adress,id,gender,isDeleted);
+                Member member = new Member(cardNumber,lastMembershipExtension,membershipDuration,isActive,membership,firstName,lastName,adress,id,gender,isDeleted,JMBG);
                 allMembers.add(member);
                 
             }
@@ -563,10 +563,10 @@ public class Library {
     } 
     
     
-    
+//  String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG  
 //    String username, String password, double paycheck, String id
     private String preWritingAdmin(Admin admin) {
-        return String.format("%s|%s|%s|%s\n", admin.getUsername(), admin.getPassword(), admin.getPaycheck(),admin.getId());
+        return String.format("%s|%s|%s|%s|%s|%s|%s|%s|%s|%s\n", admin.getUsername(), admin.getPassword(), admin.getPaycheck(),admin.getId(),admin.getFirstName(),admin.getLastName(),admin.getAdress(),admin.getGender(),admin.isDeleted,admin.getJMBG());
     }
     
     public void writeAdmin(ArrayList<Admin> allAdmins) {
@@ -583,7 +583,10 @@ public class Library {
     
     
 //  String username, String password, double paycheck, String id
+//    String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG
     public ArrayList<Admin> readAdmin(){
+    	
+//    	admin.getFirstName(),admin.getLastName(),admin.getAdress(),,admin.getGender(),admin.isDeleted,admin.getJMBG()
         
         try {
             File adminFile = new File("src/text/admins.txt");
@@ -595,7 +598,14 @@ public class Library {
                 String password = splitLines[1];
                 double paycheck=Double.parseDouble(splitLines[2]) ;
                 String id= splitLines[3];
-                Admin admin = new Admin(username,password,paycheck,id);
+                String FirstName=splitLines[4];
+                String LastName=splitLines[5];
+                String Adress=splitLines[6];
+                Gender gender=Gender.valueOf(splitLines[7]);
+                boolean isDeleted=Boolean.parseBoolean(splitLines[8]);
+                String JMBG=splitLines[9];
+                Admin admin = new Admin(FirstName,LastName,Adress,id,gender,isDeleted,JMBG,username,password,paycheck);
+//                String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
                 allAdmins.add(admin);
                 
             }
@@ -711,6 +721,19 @@ public class Library {
         return libraryRet;    
         
     } 
+    
+    public boolean deleteContent(String path) {
+    try {
+    	FileWriter writer=new FileWriter(path);
+    	writer.write("");
+    	writer.close();
+    }
+    catch(IOException e) {
+    	e.printStackTrace();
+    	return false;
+    }
+    return true;
+    }
     
     
     

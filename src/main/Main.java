@@ -13,6 +13,8 @@ public class Main {
 	public static void main(String[] args) {
 		Library library=new Library("Library of Atzo", "Varraghova 14", "non-stop", "1-234567-789", "789456");
 		
+		Admin admin=new Admin("Ranko","Jakonjac","Gorana Bogdana","123",Gender.FEMALE,false,"1234567897894","JR","Jaka sifra",1000000000000.00);
+		admin.setLibrary(library);
 		Genre genre=new Genre("Comedy","This is funny","00001");
 		ArrayList<Genre>allGenres=new ArrayList<Genre>();
 		allGenres.add(genre);
@@ -40,11 +42,14 @@ public class Main {
 //		String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted
 		
 		
-		Member member=new Member("005",LocalDate.of(2021, 6, 7),5,true,membership,"Mitar","Miric","Jovana Stojana 420","55",Gender.MALE,false);
+		Member member=new Member("005",LocalDate.of(2021, 6, 7),5,true,membership,"Mitar","Miric","Jovana Stojana 420","55",Gender.MALE,false,"1234567897897");
 				
 			ArrayList<Member>allMembers=new ArrayList<Member>();
 			allMembers.add(member);
 			library.writeMembers(allMembers);
+			library.readMembers();
+			admin.updateMember("005",LocalDate.of(2021, 6, 7),5,true,membership,"Petar","Miric","Jovana Stojana 420","55",Gender.MALE,false,"1234567897897");
+			System.out.println(library.getAllMembers().get(0));
 			System.out.println(library.readMembers());
 			
 
@@ -61,19 +66,18 @@ public class Main {
 			System.out.println(library.readCopyOfABook());
 			
 			
-			
-			Admin admin=new Admin("Vaaragh", "VeryStrongPassword", 54.3,"788123");
+//			String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
 			ArrayList<Admin>allAdmins=new ArrayList<Admin>();
 			allAdmins.add(admin);
 			library.writeAdmin(allAdmins);
 			System.out.println(library.readAdmin());
 			
 			
-			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,admin,member);
-			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
-			allRents.add(rentABook);
-			library.writeRentABook(allRents);
-			System.out.println(library.readRentABook());
+//			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,admin,member);
+//			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
+//			allRents.add(rentABook);
+//			library.writeRentABook(allRents);
+//			System.out.println(library.readRentABook());
 			
 			
 			
