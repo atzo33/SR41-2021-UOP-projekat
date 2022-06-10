@@ -43,6 +43,7 @@ public class Library {
     
     private ArrayList<Staff> allStaff = new ArrayList<Staff>();
     
+    
     public Library() {
     	this.name = "";
 		this.address = "";
@@ -513,15 +514,17 @@ public class Library {
     
 //    LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member
    
-    private void getallStaff(){
-    	for(Admin a:allAdmins) {
-    		allStaff.add(a);
-    		
-    	}
-    	for (Librarian l:allLibrarians) {
-    		allStaff.add(l);
-    	}
-    }
+//    private void getallStaff(){
+//    	for(Admin a:allAdmins) {
+//    		allStaff.add(a);
+//    		
+//    	}
+//    	for (Librarian l:allLibrarians) {
+//    		allStaff.add(l);
+//    	}
+//    }
+    
+    
     private String preWritingRentABook(RentABook rentABook) {
         return String.format("%s|%s|%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember(),rentABook.isDeleted(),rentABook.getId());
     }

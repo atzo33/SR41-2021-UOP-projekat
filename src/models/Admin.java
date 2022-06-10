@@ -38,10 +38,11 @@ public class Admin extends Staff{
 	
 	public void addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
 		Admin admin=new Admin();
+		String newId=UUID.randomUUID().toString();
 		admin.setFirstName(firstName);
 		admin.setLastName(lastName);
 		admin.setAdress(adress);
-		admin.setId(id);
+		admin.setId(newId);
 		admin.setGender(gender);
 		admin.setDeleted(false);
 		admin.setJMBG(JMBG);
@@ -108,10 +109,11 @@ public class Admin extends Staff{
 	
 	public void addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
 		Librarian librarian=new Librarian();
+		String newId=UUID.randomUUID().toString();
 		librarian.setFirstName(firstName);
 		librarian.setLastName(lastName);
 		librarian.setAdress(adress);
-		librarian.setId(id);
+		librarian.setId(newId);
 		librarian.setGender(gender);
 		librarian.setDeleted(false);
 		librarian.setJMBG(JMBG);
@@ -167,6 +169,18 @@ public class Admin extends Staff{
 			}
 		}
 	
+	public void undoDeleteLibrarian(String id) {
+		
+		for(Librarian librarian:library.getAllLibrarians()) {
+			
+			if (librarian.getId().equals(id)) {
+				librarian.setDeleted(false);
+				
+			}
+			
+			library.writeLibrarian(library.getAllLibrarians());
+		}
+	}
 	
 	
 	public boolean addNewMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
@@ -248,6 +262,19 @@ public class Admin extends Staff{
 		}
 	}
 	
+public void undoDeleteMember(String id) {
+		
+		for(Member member:this.getLibrary().getAllMembers()) {
+			
+			if (member.getId().equals(id)) {
+				member.setDeleted(false);
+				
+			}
+			
+			library.writeMembers(library.getAllMembers());
+		}
+	}
+	
 	
 	
 	public void addNewMembership(String id, String type, double price,boolean isDeleted) {
@@ -283,12 +310,12 @@ public class Admin extends Staff{
 	}
 	
 	
-	public void deleteMembership(String id) {
+	public void undoDeleteMembership(String id) {
 		
 	for(MembershipCost membership:this.getLibrary().getAllTypes()) {
 			
 			if (membership.getId().equals(id)) {
-				membership.setDeleted(true);
+				membership.setDeleted(false);
 				
 			}
 			
@@ -361,6 +388,24 @@ public class Admin extends Staff{
 	}
 	
 	
+	public void undoDeleteBook(String id) {
+		
+		for(Book book:this.getLibrary().getAllBooks()) {
+				
+				if (book.getId().equals(id)) {
+					book.setDeleted(false);
+					
+				}
+				
+				library.writeBook(library.getAllBooks());
+			}
+			
+		}
+	
+	
+	
+	
+	
 	public void addNewGenre(String name, String description, String id,boolean isDeleted) {
 		
 		Genre genre=new Genre();
@@ -410,6 +455,22 @@ public class Admin extends Staff{
 			}
 			
 		}
+	
+	
+	public void undoDeleteGenre(String id) {
+		
+		for(Genre genre:this.getLibrary().getAllGenres()) {
+				
+				if (genre.getId().equals(id)) {
+					genre.setDeleted(false);
+					
+				}
+				
+				library.writeGenre(library.getAllGenres());
+			}
+			
+		}
+	
 	
 	
 	
@@ -476,6 +537,22 @@ public class Admin extends Staff{
 		}	
 	
 	
+public void undoDeleteCopyOfABook(String id) {
+		
+		for(CopyOfABook copyOfABook:this.getLibrary().getAllCopies()) {
+				
+				if (copyOfABook.getId().equals(id)) {
+					copyOfABook.setDeleted(false);
+					
+				}
+				
+				library.writeCopyOfABook(library.getAllCopies());
+			}
+			
+		}	
+	
+	
+	
 	
 	public void createNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
 		
@@ -487,6 +564,7 @@ public class Admin extends Staff{
 		rentABook.setStaff(staff);
 		rentABook.setMember(member);
 		rentABook.setDeleted(false);
+		rentABook.setId(newId);
 		
 		
 		
@@ -495,6 +573,65 @@ public class Admin extends Staff{
 		this.getLibrary().writeRentABook(library.getAllRents());
 		
 	}
+	
+	
+	
+	public void updateRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+		for ( RentABook rentABook:this.getLibrary().getAllRents()) {
+			if(rentABook.getId().equals(id)) {
+				
+				
+				rentABook.setRentalDate(rentalDate);
+				rentABook.setReturningDate(returningDate);
+				rentABook.setCopyOfABook(copyOfABook);
+				rentABook.setStaff(staff);
+				rentABook.setMember(member);
+				rentABook.setDeleted(false);
+				rentABook.setId(id);
+				
+				library.writeRentABook(library.getAllRents());	
+			}
+		
+	}
+	
+	}
+	
+	
+	
+	public void deleteRentABook(String id) {
+		
+		for(RentABook rentABook:this.getLibrary().getAllRents()) {
+				
+				if (rentABook.getId().equals(id)) {
+					rentABook.setDeleted(true);
+					
+				}
+				
+				library.writeRentABook(library.getAllRents());
+			}
+			
+		}	
+	
+	
+	
+	
+	
+	public void undoDeleteRentABook(String id) {
+		
+		for(RentABook rentABook:this.getLibrary().getAllRents()) {
+				
+				if (rentABook.getId().equals(id)) {
+					rentABook.setDeleted(false);
+					
+				}
+				
+				library.writeRentABook(library.getAllRents());
+			}
+			
+		}	
+	
+	
+	
 	
 	
 	
