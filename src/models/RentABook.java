@@ -8,6 +8,8 @@ public class RentABook {
 	private CopyOfABook copyOfABook;
 	private Staff staff;
 	private Member member;
+	private boolean isDeleted;
+	private String id;
 	
 	
 	public RentABook() {
@@ -16,16 +18,20 @@ public class RentABook {
 		this.copyOfABook = null;
 		this.staff=null;
 		this.member=null;
+		this.isDeleted=false;
+		this.id="";
 		
 	}
 
-	public RentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member) {
+	public RentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted,String id) {
 		super();
 		this.rentalDate = rentalDate;
 		this.returningDate = returningDate;
 		this.copyOfABook = copyOfABook;
 		this.staff=staff;
 		this.member=member;
+		this.isDeleted=isDeleted;
+		this.id=id;
 	}
 
 	public LocalDate getRentalDate() {
@@ -66,6 +72,24 @@ public class RentABook {
 
 	public void setMember(Member member) {
 		this.member = member;
+	}
+	
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

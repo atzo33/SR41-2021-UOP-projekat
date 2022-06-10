@@ -183,6 +183,22 @@ public class Library {
 	
 	
 	
+	public ArrayList<RentABook> getAllRents() {
+		return allRents;
+	}
+
+	public void setAllRents(ArrayList<RentABook> allRents) {
+		this.allRents = allRents;
+	}
+
+	public ArrayList<Staff> getAllStaff() {
+		return allStaff;
+	}
+
+	public void setAllStaff(ArrayList<Staff> allStaff) {
+		this.allStaff = allStaff;
+	}
+
 	private String preWritingGenre(Genre genre) {
         return String.format("%s|%s|%s|%s\n", genre.getName(), genre.getDescription(), genre.getId(),genre.isDeleted());
     }
@@ -507,7 +523,7 @@ public class Library {
     	}
     }
     private String preWritingRentABook(RentABook rentABook) {
-        return String.format("%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember());
+        return String.format("%s|%s|%s|%s|%s|%s|%s\n", rentABook.getRentalDate(), rentABook.getReturningDate(), rentABook.getCopyOfABook(),rentABook.getStaff(),rentABook.getMember(),rentABook.isDeleted(),rentABook.getId());
     }
     
     public void writeRentABook(ArrayList<RentABook> allRents) {
@@ -550,8 +566,10 @@ public class Library {
                 	if (me.getId().equals(splitLines[4]))
                 	member=me;
                 }
+                boolean isDeleted=Boolean.parseBoolean(splitLines[5]);
+                String id=splitLines[6];
                 
-                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member);
+                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member,isDeleted,id);
                 allRents.add(rentABook);
                 
             }

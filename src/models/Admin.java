@@ -3,6 +3,7 @@ package models;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
 
@@ -409,6 +410,108 @@ public class Admin extends Staff{
 			}
 			
 		}
+	
+	
+	
+	public void addNewCopyOfABook(int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+			Language language, boolean isDeleted) {
+		
+		CopyOfABook copyOfABook=new CopyOfABook();
+		String newId=UUID.randomUUID().toString();
+		copyOfABook.setPageNumbers(pageNumbers);
+		copyOfABook.setPrintingYear(printingYear);
+		copyOfABook.setRented(false);
+		copyOfABook.setId(newId);
+		copyOfABook.setBinding(binding);
+		copyOfABook.setBook(book);
+		copyOfABook.setLanguage(language);
+		copyOfABook.setDeleted(false);
+		
+		
+		
+		this.getLibrary().getAllCopies().add(copyOfABook);
+		this.getLibrary().writeCopyOfABook(library.getAllCopies());
+			
+	}
+	
+	
+	
+	
+	public void updateCopyOfABook(int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+			Language language, boolean isDeleted) {
+		for ( CopyOfABook copyOfABook:this.getLibrary().getAllCopies()) {
+			if(copyOfABook.getId().equals(id)) {
+				
+				
+				copyOfABook.setPageNumbers(pageNumbers);
+				copyOfABook.setPrintingYear(printingYear);
+				copyOfABook.setRented(false);
+				copyOfABook.setId(id);
+				copyOfABook.setBinding(binding);
+				copyOfABook.setBook(book);
+				copyOfABook.setLanguage(language);
+				copyOfABook.setDeleted(false);
+				
+				library.writeCopyOfABook(library.getAllCopies());	
+			}
+		
+	}
+	
+	}
+	
+	
+	
+	public void deleteCopyOfABook(String id) {
+		
+		for(CopyOfABook copyOfABook:this.getLibrary().getAllCopies()) {
+				
+				if (copyOfABook.getId().equals(id)) {
+					copyOfABook.setDeleted(true);
+					
+				}
+				
+				library.writeCopyOfABook(library.getAllCopies());
+			}
+			
+		}	
+	
+	
+	
+	public void createNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+		
+		RentABook rentABook=new RentABook();
+		String newId=UUID.randomUUID().toString();
+		rentABook.setRentalDate(rentalDate);
+		rentABook.setReturningDate(returningDate);
+		rentABook.setCopyOfABook(copyOfABook);
+		rentABook.setStaff(staff);
+		rentABook.setMember(member);
+		rentABook.setDeleted(false);
+		
+		
+		
+		
+		this.getLibrary().getAllRents().add(rentABook);
+		this.getLibrary().writeRentABook(library.getAllRents());
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
