@@ -15,7 +15,7 @@ public class Main {
 		
 		Admin admin=new Admin("Ranko","Jakonjac","Gorana Bogdana","123",Gender.FEMALE,false,"1234567897894","JR","Jaka sifra",1000000000000.00);
 		admin.setLibrary(library);
-		Genre genre=new Genre("Comedy","This is funny","00001");
+		Genre genre=new Genre("Comedy","This is funny","00001",false);
 		ArrayList<Genre>allGenres=new ArrayList<Genre>();
 		allGenres.add(genre);
 		library.writeGenre(allGenres);
@@ -31,7 +31,7 @@ public class Main {
 		System.out.println(library.readBook(allGenres));
 		
 		
-		MembershipCost membership=new MembershipCost("45986","Full",15.0);
+		MembershipCost membership=new MembershipCost("45986","Full",15.0,true);
 		ArrayList<MembershipCost>allTypes=new ArrayList<MembershipCost>();
 		allTypes.add(membership);
 		library.writeMembershipCost(allTypes);

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import ennumerations.Gender;
+import ennumerations.Language;
 
 public class Admin extends Staff{
 
@@ -248,12 +249,13 @@ public class Admin extends Staff{
 	
 	
 	
-	public void addNewMembership(String id, String type, double price) {
+	public void addNewMembership(String id, String type, double price,boolean isDeleted) {
 		MembershipCost membership=new MembershipCost();
 		String newId=UUID.randomUUID().toString();
 		membership.setId(newId);
 		membership.setType(type);
 		membership.setPrice(price);
+		membership.setDeleted(isDeleted);
 		this.getLibrary().getAllTypes().add(membership);
 		this.getLibrary().writeMembershipCost(library.getAllTypes());
 		
@@ -261,12 +263,14 @@ public class Admin extends Staff{
 	}
 	
 	
-	public void updateMembership(String id, String type, double price) {
+	public void updateMembership(String id, String type, double price,boolean isDeleted) {
 		for ( MembershipCost membership:this.getLibrary().getAllTypes()) {
 			if(membership.getId().equals(id)) {
 				membership.setId(id);
 				membership.setType(type);
 				membership.setPrice(price);
+				membership.setDeleted(isDeleted);
+				
 				
 				
 				library.writeMembershipCost(library.getAllTypes());	
@@ -276,5 +280,153 @@ public class Admin extends Staff{
 	
 	
 	}
+	
+	
+	public void deleteMembership(String id) {
+		
+	for(MembershipCost membership:this.getLibrary().getAllTypes()) {
+			
+			if (membership.getId().equals(id)) {
+				membership.setDeleted(true);
+				
+			}
+			
+			library.writeMembershipCost(library.getAllTypes());
+		}
+		
+	}
+	
+	
+	public void addNewBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
+			Genre genre, Language language,boolean isDeleted) {
+		
+		Book book=new Book();
+		String newId=UUID.randomUUID().toString();
+		book.setTitle(title);
+		book.setOriginalTitle(originalTitle);
+		book.setWriter(writer);
+		book.setReleaseDate(releaseDate);
+		book.setDescription(description);
+		book.setId(newId);
+		book.setGenre(genre);
+		book.setLanguage(language);
+		book.setDeleted(isDeleted);
+		
+		this.getLibrary().getAllBooks().add(book);
+		this.getLibrary().writeBook(library.getAllBooks());
+		
+		
+	}
+	
+	
+	
+	
+	public void updateBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
+			Genre genre, Language language,boolean isDeleted) {
+		for ( Book book:this.getLibrary().getAllBooks()) {
+			if(book.getId().equals(id)) {
+				book.setTitle(title);
+				book.setOriginalTitle(originalTitle);
+				book.setWriter(writer);
+				book.setReleaseDate(releaseDate);
+				book.setDescription(description);
+				book.setId(id);
+				book.setGenre(genre);
+				book.setLanguage(language);
+				book.setDeleted(isDeleted);
+				
+				library.writeBook(library.getAllBooks());	
+			}
+		
+	}
+	
+	
+	}
+	
+	
+	
+	public void deleteBook(String id) {
+		
+	for(Book book:this.getLibrary().getAllBooks()) {
+			
+			if (book.getId().equals(id)) {
+				book.setDeleted(true);
+				
+			}
+			
+			library.writeBook(library.getAllBooks());
+		}
+		
+	}
+	
+	
+	public void addNewGenre(String name, String description, String id,boolean isDeleted) {
+		
+		Genre genre=new Genre();
+		String newId=UUID.randomUUID().toString();
+		genre.setName(name);
+		genre.setDescription(description);
+		genre.setId(newId);
+		genre.setDeleted(false);
+		
+		this.getLibrary().getAllGenres().add(genre);
+		this.getLibrary().writeGenre(library.getAllGenres());
+		
+	}
+	
+	
+	
+	
+	public void updateGenre(String name, String description, String id,boolean isDeleted) {
+		for ( Genre genre:this.getLibrary().getAllGenres()) {
+			if(genre.getId().equals(id)) {
+				genre.setName(name);
+				genre.setDescription(description);
+				genre.setId(id);
+				genre.setDeleted(false);
+				
+				library.writeGenre(library.getAllGenres());	
+			}
+		
+	}
+		
+		
+		
+	}
+	
+	
+	
+	public void deleteGenre(String id) {
+		
+		for(Genre genre:this.getLibrary().getAllGenres()) {
+				
+				if (genre.getId().equals(id)) {
+					genre.setDeleted(true);
+					
+				}
+				
+				library.writeGenre(library.getAllGenres());
+			}
+			
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 

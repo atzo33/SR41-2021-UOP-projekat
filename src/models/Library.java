@@ -184,7 +184,7 @@ public class Library {
 	
 	
 	private String preWritingGenre(Genre genre) {
-        return String.format("%s|%s|%s\n", genre.getName(), genre.getDescription(), genre.getId());
+        return String.format("%s|%s|%s|%s\n", genre.getName(), genre.getDescription(), genre.getId(),genre.isDeleted());
     }
     
     public void writeGenre(ArrayList<Genre> allGenres) {
@@ -210,7 +210,8 @@ public class Library {
                 String name = splitLines[0];
                 String description = splitLines[1];
                 String id = splitLines[2];
-                Genre genre = new Genre(name,description,id);
+                boolean isDeleted=Boolean.parseBoolean(splitLines[3]);
+                Genre genre = new Genre(name,description,id,isDeleted);
                 allGenres.add(genre);
                 
             }
@@ -306,7 +307,7 @@ public class Library {
     
     
     private String preWritingMembershipCost(MembershipCost membership) {
-        return String.format("%s|%s|%s\n", membership.getId(), membership.getType(), membership.getPrice());
+        return String.format("%s|%s|%s|%s\n", membership.getId(), membership.getType(), membership.getPrice(),membership.isDeleted());
     }
     
     public void writeMembershipCost(ArrayList<MembershipCost> allMemberships) {
@@ -332,7 +333,9 @@ public class Library {
                 String id = splitLines[0];
                 String type = splitLines[1];
                 double price =Double.parseDouble(splitLines[2]) ;
-                MembershipCost membership = new MembershipCost(id,type,price);
+                boolean isDeleted=Boolean.parseBoolean(splitLines[3]);
+                
+                MembershipCost membership = new MembershipCost(id,type,price,isDeleted);
                 allTypes.add(membership);
                 
             }

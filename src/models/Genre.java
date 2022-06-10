@@ -4,6 +4,7 @@ public class Genre {
 	private String name;
 	private String description;
 	private String id;
+	private boolean isDeleted;
 	
 
 
@@ -11,13 +12,15 @@ public Genre() {
 	this.name = "";
 	this.description = "";
 	this.id = "";
+	this.isDeleted=false;
 	
 }
-public Genre(String name, String description, String id) {
+public Genre(String name, String description, String id,boolean isDeleted) {
 	
 	this.name = name;
 	this.description = description;
 	this.id = id;
+	this.isDeleted=isDeleted;
 }
 public String getName() {
 	return name;
@@ -36,6 +39,13 @@ public String getId() {
 }
 public void setId(String id) {
 	this.id = id;
+}
+
+public boolean isDeleted() {
+	return isDeleted;
+}
+public void setDeleted(boolean isDeleted) {
+	this.isDeleted = isDeleted;
 }
 @Override
 public String toString() {
