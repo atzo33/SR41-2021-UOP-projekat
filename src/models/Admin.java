@@ -36,7 +36,7 @@ public class Admin extends Staff{
 		
 	}
 	
-	public void addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+	public boolean addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
 		Admin admin=new Admin();
 		String newId=UUID.randomUUID().toString();
 		admin.setFirstName(firstName);
@@ -50,8 +50,19 @@ public class Admin extends Staff{
 		admin.setPassword(password);
 		admin.setPaycheck(paycheck);
 		admin.setLibrary(library);
+		
+		for(Admin a:this.getLibrary().getAllAdmins()) {
+			if(a.getJMBG().equals(JMBG)||a.getUsername().equals(username)) {
+				return false;
+					
+			}	
+			
+		}
+		
+		
 		library.getAllAdmins().add(admin);
 		library.writeAdmin(library.getAllAdmins());
+		return true;
 		
 	}
 		
@@ -107,7 +118,7 @@ public class Admin extends Staff{
 	
 	
 	
-	public void addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+	public boolean addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
 		Librarian librarian=new Librarian();
 		String newId=UUID.randomUUID().toString();
 		librarian.setFirstName(firstName);
@@ -121,8 +132,17 @@ public class Admin extends Staff{
 		librarian.setPassword(password);
 		librarian.setPaycheck(paycheck);
 		librarian.setLibrary(library);
+		for(Librarian l:this.getLibrary().getAllLibrarians()) {
+			if(l.getJMBG().equals(JMBG)||l.getUsername().equals(username)) {
+				return false;
+					
+			}	
+			
+		}
+		
 		library.getAllLibrarians().add(librarian);
 		library.writeLibrarian(library.getAllLibrarians());
+		return true;
 		
 	}
 	
@@ -277,16 +297,23 @@ public void undoDeleteMember(String id) {
 	
 	
 	
-	public void addNewMembership(String id, String type, double price,boolean isDeleted) {
+	public boolean addNewMembership(String id, String type, double price,boolean isDeleted) {
 		MembershipCost membership=new MembershipCost();
 		String newId=UUID.randomUUID().toString();
 		membership.setId(newId);
 		membership.setType(type);
 		membership.setPrice(price);
 		membership.setDeleted(isDeleted);
+		for(MembershipCost me:this.getLibrary().getAllTypes()) {
+			if(me.getId().equals(id)||me.getType().equals(type)) {
+				return false;
+					
+			}	
+			
+		}
 		this.getLibrary().getAllTypes().add(membership);
 		this.getLibrary().writeMembershipCost(library.getAllTypes());
-		
+		return true;
 			
 	}
 	
@@ -325,7 +352,7 @@ public void undoDeleteMember(String id) {
 	}
 	
 	
-	public void addNewBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
+	public boolean addNewBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
 			Genre genre, Language language,boolean isDeleted) {
 		
 		Book book=new Book();
@@ -340,8 +367,17 @@ public void undoDeleteMember(String id) {
 		book.setLanguage(language);
 		book.setDeleted(isDeleted);
 		
+		for(Book b:this.getLibrary().getAllBooks()) {
+			if(b.getId().equals(newId)||b.getDescription().equals(description)) {
+				return false;
+					
+			}	
+			
+		}
+		
 		this.getLibrary().getAllBooks().add(book);
 		this.getLibrary().writeBook(library.getAllBooks());
+		return true;
 		
 		
 	}
@@ -406,7 +442,7 @@ public void undoDeleteMember(String id) {
 	
 	
 	
-	public void addNewGenre(String name, String description, String id,boolean isDeleted) {
+	public boolean addNewGenre(String name, String description, String id,boolean isDeleted) {
 		
 		Genre genre=new Genre();
 		String newId=UUID.randomUUID().toString();
@@ -415,8 +451,17 @@ public void undoDeleteMember(String id) {
 		genre.setId(newId);
 		genre.setDeleted(false);
 		
+		for(Genre g:this.getLibrary().getAllGenres()) {
+			if(g.getId().equals(JMBG)||g.getDescription().equals(description)) {
+				return false;
+					
+			}	
+			
+		}
+		
 		this.getLibrary().getAllGenres().add(genre);
 		this.getLibrary().writeGenre(library.getAllGenres());
+		return true;
 		
 	}
 	
