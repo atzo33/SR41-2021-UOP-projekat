@@ -452,7 +452,7 @@ public void undoDeleteMember(String id) {
 		genre.setDeleted(false);
 		
 		for(Genre g:this.getLibrary().getAllGenres()) {
-			if(g.getId().equals(JMBG)||g.getDescription().equals(description)) {
+			if(g.getId().equals(id)||g.getDescription().equals(description)) {
 				return false;
 					
 			}	

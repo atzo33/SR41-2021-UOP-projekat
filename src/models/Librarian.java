@@ -12,8 +12,8 @@ public class Librarian extends Staff {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Librarian(String username, String password, double paycheck, String id) {
-		super(username, password, paycheck);
+	public Librarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+		super(firstName,lastName,adress,id,gender,isDeleted,JMBG,username,password,paycheck);
 		// TODO Auto-generated constructor stub
 	}
 	

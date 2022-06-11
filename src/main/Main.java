@@ -2,6 +2,7 @@ package main;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ennumerations.Binding;
 import ennumerations.Gender;
@@ -12,6 +13,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		Library library=new Library("Library of Atzo", "Varraghova 14", "non-stop", "1-234567-789", "789456");
+		library.readAdmin();
+		library.readGenres();
+		library.readBook();
+		library.readCopyOfABook();
+		library.readMembershipCost();
+		library.readLibrarian();
+		library.readMembers();
+		library.readRentABook();
+		
 		
 		Admin admin=new Admin("Ranko","Jakonjac","Gorana Bogdana","123",Gender.FEMALE,false,"1234567897894","JR","Jaka sifra",1000000000000.00);
 		admin.setLibrary(library);
@@ -19,7 +29,7 @@ public class Main {
 		ArrayList<Genre>allGenres=new ArrayList<Genre>();
 		allGenres.add(genre);
 		library.writeGenre(allGenres);
-		System.out.println(library.readGenres());
+		library.readGenres();
 		
 		
 		
@@ -28,7 +38,7 @@ public class Main {
 		ArrayList<Book>allBooks=new ArrayList<Book>();
 		allBooks.add(book);
 		library.writeBook(allBooks);
-		System.out.println(library.readBook(allGenres));
+		library.readBook();
 		
 		
 		MembershipCost membership=new MembershipCost("45986","Full",15.0,true);
@@ -63,7 +73,7 @@ public class Main {
 			allCopies.add(copyOfABook);
 			System.out.println(allCopies);
 			library.writeCopyOfABook(allCopies);
-			System.out.println(library.readCopyOfABook());
+			library.readCopyOfABook();
 			
 			
 //			String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
@@ -73,11 +83,6 @@ public class Main {
 			System.out.println(library.readAdmin());
 			
 			
-//			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,admin,member);
-//			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
-//			allRents.add(rentABook);
-//			library.writeRentABook(allRents);
-//			System.out.println(library.readRentABook());
 			
 			
 			
@@ -86,13 +91,19 @@ public class Main {
 			
 			
 			
-			Librarian librarian=new Librarian("VaaraghSmallVersion", "VeryWeakPassword", 154.3,"78812223");
+			Librarian librarian=new Librarian("firstName","lastName","adress","id",Gender.MALE,false,"JMBG","username","password",10);
 			ArrayList<Librarian>allLibrarians=new ArrayList<Librarian>();
 			allLibrarians.add(librarian);
+			library.setAllLibrarians(allLibrarians);
 			library.writeLibrarian(allLibrarians);
-			System.out.println(library.readLibrarian());
+			library.readLibrarian();			
 			
-			
+			RentABook rentABook=new RentABook(LocalDate.of(2021, 6, 7),LocalDate.of(2021, 6, 7),copyOfABook,librarian,member,false,"RentABookId");
+			ArrayList<RentABook>allRents=new ArrayList<RentABook>();
+			allRents.add(rentABook);
+			library.writeRentABook(allRents);
+			library.readRentABook();
+			System.out.println(library.getAllRents());
 			
 			
 			
@@ -103,7 +114,7 @@ public class Main {
 			
 			
 			
-			
+			System.out.println(UUID.randomUUID().toString());
 			
 			
 			

@@ -1,1 +1,1 @@
-500|1997|true|9595|HARD|Book [title=Rat i mir, originalTitle=Peace and war, writer=Tolstoy, releaseDate=1887-05-05, description=Ovo je dosadna knjiga, id=0000000056, genre=Genre [name=Comedy, description=This is funny, id=00001], language=SERBIAN, isDeleted=false]|SERBIAN|false
+500|1997|true|9595|HARD|0000000056|SERBIAN|false
