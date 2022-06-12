@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
+import osobe.Prodavac;
 
 public class Library {
 	
@@ -768,6 +769,18 @@ public class Library {
     }
     return true;
     }
+    
+    
+    
+    public Staff login(String username, String password) {
+		for(Staff staff : this.getAllStaff()) {
+			if(staff.getUsername().equalsIgnoreCase(username) &&
+					staff.getPassword().equals(password) && !staff.isDeleted()) {
+				return staff;
+			}
+		}
+		return null;
+	}
     
     
     
