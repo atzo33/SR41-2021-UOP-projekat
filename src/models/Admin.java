@@ -599,7 +599,7 @@ public void undoDeleteCopyOfABook(String id) {
 	
 	
 	
-	public void createNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+	public void addNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
 		
 		RentABook rentABook=new RentABook();
 		String newId=UUID.randomUUID().toString();
