@@ -7,6 +7,8 @@ import java.util.UUID;
 import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
+
+import gui.loginWindow;
 import models.*;
 
 public class Main {
@@ -41,7 +43,7 @@ public class Main {
 		library.readBook();
 		
 		
-		MembershipCost membership=new MembershipCost("45986","Full",15.0,true);
+		MembershipCost membership=new MembershipCost("45986","Full",15.0,false);
 		ArrayList<MembershipCost>allTypes=new ArrayList<MembershipCost>();
 		allTypes.add(membership);
 		library.writeMembershipCost(allTypes);
@@ -107,14 +109,21 @@ public class Main {
 			
 			
 			
+			
+			
 //			Library library=new Library("Library of master Atzo","Bonka Zvogdana 33","00-24", "123-456-666", "1");
 			
 			library.writeLibrary();
-			library.readLibrary();
+			Library.readLibrary();
 			
 			
 			
 			System.out.println(UUID.randomUUID().toString());
+			
+			
+			
+			loginWindow lw = new loginWindow(library);
+			lw.setVisible(true);
 			
 			
 			

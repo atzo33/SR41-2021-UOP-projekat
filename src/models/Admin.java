@@ -124,7 +124,7 @@ public class Admin extends Staff{
 		librarian.setFirstName(firstName);
 		librarian.setLastName(lastName);
 		librarian.setAdress(adress);
-		librarian.setId(newId);
+		librarian.setId(id);
 		librarian.setGender(gender);
 		librarian.setDeleted(false);
 		librarian.setJMBG(JMBG);
@@ -148,6 +148,8 @@ public class Admin extends Staff{
 	
 	
 	
+
+
 	public void updateLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
 		for (Librarian librarian:this.getLibrary().getAllLibrarians()) {
 			if(librarian.getId().equals(id)) {

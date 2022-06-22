@@ -11,15 +11,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-
+import models.Admin;
 import models.Library;
 import models.Staff;
 import net.miginfocom.swing.MigLayout;
-import osobe.Prodavac;
 
 
 
 
+
+@SuppressWarnings("serial")
 public class loginWindow extends JFrame {
 	
 	private JLabel lblGreeting = new JLabel("Welcome, please log in!");
@@ -30,6 +31,7 @@ public class loginWindow extends JFrame {
 	private JButton btnOk = new JButton("OK");
 	private JButton btnCancel = new JButton("Cancel");
 	private Library library;
+	
 	
 	
 	public loginWindow(Library library) {
@@ -57,8 +59,8 @@ public class loginWindow extends JFrame {
 		add(btnCancel);
 		
 		
-		txtUsername.setText("");
-		pfPassword.setText("");
+		txtUsername.setText("JR");
+		pfPassword.setText("Jaka sifra");
 		getRootPane().setDefaultButton(btnOk);
 	}
 	
@@ -82,13 +84,13 @@ public class loginWindow extends JFrame {
 				if(username.equals("") || password.equals("")) {
 					JOptionPane.showMessageDialog(null, "You didn't enter login credentials", "Error", JOptionPane.WARNING_MESSAGE);
 				}else {
-					Staff staff = staff(username, password);
-					if(staff == null) {
+					Staff loggedIn = library.login(username, password);
+					if(loggedIn == null) {
 						JOptionPane.showMessageDialog(null, "Wrong login credentials", "Error", JOptionPane.WARNING_MESSAGE);
 					}else {
 						loginWindow.this.dispose();
 						loginWindow.this.setVisible(false);
-						MainWindow mw = new MainWindow(library, staff);
+						MainWindow mw = new MainWindow(library,loggedIn);
 						mw.setVisible(true);
 					}
 				}

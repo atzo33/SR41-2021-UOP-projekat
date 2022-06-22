@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import ennumerations.Binding;
 import ennumerations.Gender;
 import ennumerations.Language;
-import osobe.Prodavac;
+
+
 
 public class Library {
 	
@@ -354,7 +355,18 @@ public class Library {
                 boolean isDeleted=Boolean.parseBoolean(splitLines[3]);
                 
                 MembershipCost membership = new MembershipCost(id,type,price,isDeleted);
-                allTypes.add(membership);
+                
+                
+                boolean duplicate=false;
+                for (MembershipCost memc:this.getAllTypes()) {
+                	if(memc.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allTypes.add(membership);
+                }
                 
             }
             reader.close();
@@ -367,7 +379,15 @@ public class Library {
         
     } 
     
-    
+    public ArrayList<MembershipCost>allActiveMemberships(){
+    	ArrayList<MembershipCost> list=new ArrayList<MembershipCost>();
+    	for(MembershipCost membership:this.getAllTypes()) {
+    		if(!membership.isDeleted()) {
+    			list.add(membership);
+    		}
+    	}
+    	return list;
+    }
     
     
     
@@ -431,7 +451,18 @@ public class Library {
                 
           
                 Member member = new Member(cardNumber,lastMembershipExtension,membershipDuration,isActive,membership,firstName,lastName,adress,id,gender,isDeleted,JMBG);
-                allMembers.add(member);
+                boolean duplicate=false;
+                for (Member mem:this.getAllMembers()) {
+                	if(mem.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allMembers.add(member);
+                }
+                
+                
                 
             }
             reader.close();
@@ -443,6 +474,17 @@ public class Library {
         return allMembers;
         
     } 
+    
+    public ArrayList<Member>allActiveMembers(){
+    	ArrayList<Member> list=new ArrayList<Member>();
+    	for(Member member:this.getAllMembers()) {
+    		if(!member.isDeleted()) {
+    			list.add(member);
+    		}
+    	}
+    	return list;
+    }
+    
     
     
     
@@ -781,6 +823,18 @@ public class Library {
 		}
 		return null;
 	}
+    
+    
+    public ArrayList<Admin> allActiveAdmins() {
+		ArrayList<Admin> active = new ArrayList<Admin>();
+		for (Admin admin : this.getAllAdmins()) {
+			if(!admin.isDeleted()) {
+				active.add(admin);
+			}
+		}
+		return active;
+	}
+	
     
     
     
