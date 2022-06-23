@@ -55,11 +55,11 @@ public class LibrarianWindow extends JFrame {
 		
 		
 		String[] header = new String[] {"First Name", "Last Name", "Adress", "ID", "Gender","JMBG","Username","Password","Paycheck"};
-		Object[][] content = new Object[library.getAllLibrarians().size()][header.length];
+		Object[][] content = new Object[library.allActiveLibrarians().size()][header.length];
 		
 		
-		for(int i=0; i<library.getAllLibrarians().size(); i++) {
-			Librarian librarian = library.getAllLibrarians().get(i);
+		for(int i=0; i<library.allActiveLibrarians().size(); i++) {
+			Librarian librarian = library.allActiveLibrarians().get(i);
 			content[i][0] = librarian.getFirstName();
 			content[i][1] = librarian.getLastName();
 			content[i][2] = librarian.getAdress();

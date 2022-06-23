@@ -12,7 +12,7 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-
+import models.Book;
 import models.Library;
 
 @SuppressWarnings("serial")
@@ -55,12 +55,12 @@ public class BookWindow extends JFrame{
 		
 		
 		String[] header = new String[] {"Title", "Original title", "Writer", "Release Date", "Description","id","Genre","Language"};
-		Object[][] content = new Object[library.getAllBooks().size()][header.length];
+		Object[][] content = new Object[library.allActiveBooks().size()][header.length];
 		
 //		String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
 //		Genre genre, Language language,boolean isDeleted
-		for(int i=0; i<library.getAllBooks().size(); i++) {
-			models.Book book = library.getAllBooks().get(i);
+		for(int i=0; i<library.allActiveBooks().size(); i++) {
+			Book book = library.allActiveBooks().get(i);
 			content[i][0] = book.getTitle();
 			content[i][1] = book.getOriginalTitle();
 			content[i][2] = book.getWriter();

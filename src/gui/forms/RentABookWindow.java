@@ -59,11 +59,11 @@ public class RentABookWindow extends JFrame {
 //LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted,String id
 		
 		String[] header = new String[] {"Rental date", "Returning date", "Copy Of A Book","Staff","Member","ID"};
-		Object[][] content = new Object[library.getAllRents().size()][header.length];
+		Object[][] content = new Object[library.allActiveRents().size()][header.length];
 		
 		
-		for(int i=0; i<library.getAllRents().size(); i++) {
-			RentABook rentABook = library.getAllRents().get(i);
+		for(int i=0; i<library.allActiveRents().size(); i++) {
+			RentABook rentABook = library.allActiveRents().get(i);
 			content[i][0] = rentABook.getRentalDate();
 			content[i][1] = rentABook.getReturningDate();
 			content[i][2] = rentABook.getCopyOfABook().getId();

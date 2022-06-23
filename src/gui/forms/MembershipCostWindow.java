@@ -59,11 +59,11 @@ public class MembershipCostWindow extends JFrame {
 //		String id, String type, double price,boolean isDeleted
 		
 		String[] header = new String[] {"ID", "Type", "Price"};
-		Object[][] content = new Object[library.getAllTypes().size()][header.length];
+		Object[][] content = new Object[library.allActiveMemberships().size()][header.length];
 		
 		
-		for(int i=0; i<library.getAllTypes().size(); i++) {
-			MembershipCost membership = library.getAllTypes().get(i);
+		for(int i=0; i<library.allActiveMemberships().size(); i++) {
+			MembershipCost membership = library.allActiveMemberships().get(i);
 			content[i][0] = membership.getId();
 			content[i][1] = membership.getType();
 			content[i][2] = membership.getPrice();

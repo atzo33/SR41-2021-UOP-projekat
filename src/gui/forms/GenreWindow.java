@@ -57,11 +57,11 @@ public class GenreWindow extends JFrame {
 		
 //		String name, String description, String id
 		String[] header = new String[] {"Name", "Description", "ID"};
-		Object[][] content = new Object[library.getAllGenres().size()][header.length];
+		Object[][] content = new Object[library.allActiveGenres().size()][header.length];
 		
 		
-		for(int i=0; i<library.getAllGenres().size(); i++) {
-			Genre genre = library.getAllGenres().get(i);
+		for(int i=0; i<library.allActiveGenres().size(); i++) {
+			Genre genre = library.allActiveGenres().get(i);
 			content[i][0] = genre.getName();
 			content[i][1] = genre.getDescription();
 			content[i][2] = genre.getId();

@@ -230,8 +230,21 @@ public class Library {
                 String description = splitLines[1];
                 String id = splitLines[2];
                 boolean isDeleted=Boolean.parseBoolean(splitLines[3]);
-                Genre genre = new Genre(name,description,id,isDeleted);
-                allGenres.add(genre);
+//                Genre genre = new Genre(name,description,id,isDeleted);
+//                allGenres.add(genre);
+                
+                
+                Genre genre = new Genre(name,description,id,isDeleted);               
+                boolean duplicate=false;
+                for (Genre gen:this.getAllGenres()) {
+                	if(gen.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allGenres.add(genre);
+                }
                 
             }
             reader.close();
@@ -243,6 +256,21 @@ public class Library {
         return allGenres;
         
     } 
+    
+    
+    public ArrayList<Genre>allActiveGenres(){
+    	ArrayList<Genre> list=new ArrayList<Genre>();
+    	for(Genre genre:this.getAllGenres()) {
+    		if(!genre.isDeleted()) {
+    			list.add(genre);
+    		}
+    	}
+    	return list;
+    }
+    
+    
+    
+		    
     
     
     
@@ -301,9 +329,22 @@ public class Library {
                 }
                 Language language= Language.valueOf(splitLines[7]);
                 boolean isDeleted=Boolean.parseBoolean(splitLines[8]);
-                Book book = new Book(title,originalTitle,writer,releaseDate,description,id,genre,language,isDeleted);
-                allBooks.add(book);
+//                Book book = new Book(title,originalTitle,writer,releaseDate,description,id,genre,language,isDeleted);
+//                allBooks.add(book);
                 
+                
+                
+                Book book = new Book(title,originalTitle,writer,releaseDate,description,id,genre,language,isDeleted);              
+                boolean duplicate=false;
+                for (Book bok:this.getAllBooks()) {
+                	if(bok.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allBooks.add(book);
+                }
             
                 
                 
@@ -321,6 +362,16 @@ public class Library {
         return allBooks;
         
     } 
+    
+    public ArrayList<Book>allActiveBooks(){
+    	ArrayList<Book> list=new ArrayList<Book>();
+    	for(Book book:this.getAllBooks()) {
+    		if(!book.isDeleted()) {
+    			list.add(book);
+    		}
+    	}
+    	return list;
+    }
     
     
     
@@ -534,8 +585,21 @@ public class Library {
                 }            
                 Language language=Language.valueOf(splitLines[6]);
                 boolean isDeleted=Boolean.parseBoolean(splitLines[7]);
-                CopyOfABook copyOfABook = new CopyOfABook(pageNumbers,printingYear,isRented,id,binding,book,language,isDeleted);
-                allCopies.add(copyOfABook);
+                
+                
+                
+                
+                CopyOfABook copyOfABook = new CopyOfABook(pageNumbers,printingYear,isRented,id,binding,book,language,isDeleted);       
+                boolean duplicate=false;
+                for (CopyOfABook cob:this.getAllCopies()) {
+                	if(cob.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allCopies.add(copyOfABook);
+                }
 
                 
             }
@@ -548,6 +612,17 @@ public class Library {
         return allCopies;
         
     } 
+    
+    
+    public ArrayList<CopyOfABook>allActiveCopies(){
+    	ArrayList<CopyOfABook> list=new ArrayList<CopyOfABook>();
+    	for(CopyOfABook copyOfABook:this.getAllCopies()) {
+    		if(!copyOfABook.isDeleted()) {
+    			list.add(copyOfABook);
+    		}
+    	}
+    	return list;
+    }
     
     
     
@@ -619,8 +694,21 @@ public class Library {
                 boolean isDeleted=Boolean.parseBoolean(splitLines[5]);
                 String id=splitLines[6];
                 
-                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member,isDeleted,id);
-                allRents.add(rentABook);
+                
+                
+                
+                
+                RentABook rentABook = new RentABook(rentalDate,returningDate,copyOfABook,staff,member,isDeleted,id);      
+                boolean duplicate=false;
+                for (RentABook rab:this.getAllRents()) {
+                	if(rab.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allRents.add(rentABook);
+                }
                 
             }
             reader.close();
@@ -632,6 +720,17 @@ public class Library {
         return allRents;
         
     } 
+    
+    
+    public ArrayList<RentABook>allActiveRents(){
+    	ArrayList<RentABook> list=new ArrayList<RentABook>();
+    	for(RentABook rentABook:this.getAllRents()) {
+    		if(!rentABook.isDeleted()) {
+    			list.add(rentABook);
+    		}
+    	}
+    	return list;
+    }
     
     
 //  String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG  
@@ -675,9 +774,22 @@ public class Library {
                 Gender gender=Gender.valueOf(splitLines[7]);
                 boolean isDeleted=Boolean.parseBoolean(splitLines[8]);
                 String JMBG=splitLines[9];
-                Admin admin = new Admin(FirstName,LastName,Adress,id,gender,isDeleted,JMBG,username,password,paycheck);
+                
 //                String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
-                allAdmins.add(admin);
+                
+                
+                
+                Admin admin = new Admin(FirstName,LastName,Adress,id,gender,isDeleted,JMBG,username,password,paycheck);    
+                boolean duplicate=false;
+                for (Admin adm:this.getAllAdmins()) {
+                	if(adm.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allAdmins.add(admin);
+                }
                 
             }
             reader.close();
@@ -689,6 +801,17 @@ public class Library {
         return allAdmins;
         
     } 
+    
+    public ArrayList<Admin> allActiveAdmins() {
+		ArrayList<Admin> active = new ArrayList<Admin>();
+		for (Admin admin : this.getAllAdmins()) {
+			if(!admin.isDeleted()) {
+				active.add(admin);
+			}
+		}
+		return active;
+	}
+	
     
     
     
@@ -731,8 +854,22 @@ public class Library {
                 String username = splitLines[7];
                 String password = splitLines[8];
                 double paycheck=Double.parseDouble(splitLines[9]) ;
-                Librarian librarian = new Librarian(firstName,lastName,adress,id,gender,isDeleted,JMBG,username,password,paycheck);
-                allLibrarians.add(librarian);
+                
+                
+                
+                
+                
+                Librarian librarian = new Librarian(firstName,lastName,adress,id,gender,isDeleted,JMBG,username,password,paycheck); 
+                boolean duplicate=false;
+                for (Librarian lib:this.getAllLibrarians()) {
+                	if(lib.getId().equals(id)) {
+                		duplicate=true;
+                		break;
+                	}
+                }
+                if (!duplicate) {
+                	allLibrarians.add(librarian);
+                }
                 
             }
             reader.close();
@@ -744,6 +881,17 @@ public class Library {
         return allLibrarians;
         
     } 
+    
+    
+    public ArrayList<Librarian>allActiveLibrarians(){
+    	ArrayList<Librarian> list=new ArrayList<Librarian>();
+    	for(Librarian librarian:this.getAllLibrarians()) {
+    		if(!librarian.isDeleted()) {
+    			list.add(librarian);
+    		}
+    	}
+    	return list;
+    }
     
     
     
@@ -783,6 +931,7 @@ public class Library {
                 String workingHours= splitLines[3];
                 String id=splitLines[4];
                 Library library = new Library(adress,name,phoneNumber,workingHours,id);
+                
                
                 libraryRet=library;   
             }
@@ -825,16 +974,7 @@ public class Library {
 	}
     
     
-    public ArrayList<Admin> allActiveAdmins() {
-		ArrayList<Admin> active = new ArrayList<Admin>();
-		for (Admin admin : this.getAllAdmins()) {
-			if(!admin.isDeleted()) {
-				active.add(admin);
-			}
-		}
-		return active;
-	}
-	
+   
     
     
     

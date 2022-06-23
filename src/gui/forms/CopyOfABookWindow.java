@@ -57,11 +57,11 @@ public class CopyOfABookWindow extends JFrame {
 //	int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
 //		Language language	
 		String[] header = new String[] {"Page Numbers", "Printing year", "Is Rented","ID","Binding","Book","Language"};
-		Object[][] content = new Object[library.getAllCopies().size()][header.length];
+		Object[][] content = new Object[library.allActiveCopies().size()][header.length];
 		
 		
-		for(int i=0; i<library.getAllCopies().size(); i++) {
-			CopyOfABook copyOfABook = library.getAllCopies().get(i);
+		for(int i=0; i<library.allActiveCopies().size(); i++) {
+			CopyOfABook copyOfABook = library.allActiveCopies().get(i);
 			content[i][0] = copyOfABook.getPageNumbers();
 			content[i][1] = copyOfABook.getPrintingYear();
 			content[i][2] = copyOfABook.isRented();
