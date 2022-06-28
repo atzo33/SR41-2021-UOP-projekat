@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import ennumerations.Binding;
 import ennumerations.Gender;
@@ -1063,6 +1064,179 @@ public void undoDeleteMember(String id) {
 			this.writeMembers(this.getAllMembers());
 		}
 	}
+
+//ADMIN
+
+	public boolean addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+		Admin admin=new Admin();
+		String newId=UUID.randomUUID().toString();
+		admin.setFirstName(firstName);
+		admin.setLastName(lastName);
+		admin.setAdress(adress);
+		admin.setId(id);
+		admin.setGender(gender);
+		admin.setDeleted(false);
+		admin.setJMBG(JMBG);
+		admin.setUsername(username);
+		admin.setPassword(password);
+		admin.setPaycheck(paycheck);
+//		admin.setLibrary(library);
+		
+		for(Admin a:this.getAllAdmins()) {
+			if(a.getJMBG().equals(JMBG)||a.getUsername().equals(username)) {
+				return false;
+					
+			}	
+			
+		}
+		
+		
+		this.getAllAdmins().add(admin);
+		this.writeAdmin(this.getAllAdmins());
+		return true;
+		
+	}
+		
+		public boolean updateAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+			for (Admin admin:this.getAllAdmins()) {
+				if(admin.getId().equals(id)) {
+					admin.setFirstName(firstName);
+					admin.setLastName(lastName);
+					admin.setAdress(adress);
+					admin.setId(id);
+					admin.setGender(gender);
+					admin.setDeleted(false);
+					admin.setJMBG(JMBG);
+					admin.setUsername(username);
+					admin.setPassword(password);
+					admin.setPaycheck(paycheck);
+//					admin.setLibrary(library);
+//					this.deleteContent("src/text/admins.txt");
+				}
+				
+				
+				
+			}
+			this.writeAdmin(this.getAllAdmins());	
+			return true;
+			
+		}
+		
+	public void deleteAdmin(String id) {
+		
+		for(Admin admin:this.getAllAdmins()) {
+			
+			if (admin.getId().equals(id)) {
+				admin.setDeleted(true);
+				
+			}
+			
+			this.writeAdmin(this.getAllAdmins());
+		}
+	}
+	
+	public void undoDeleteAdmin(String id) {
+			
+			for(Admin admin:this.getAllAdmins()) {
+				
+				if (admin.getId().equals(id)) {
+					admin.setDeleted(false);
+					
+				}
+				
+				this.writeAdmin(this.getAllAdmins());
+			}
+		}
+	
+	
+	
+	public boolean addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+		Librarian librarian=new Librarian();
+		String newId=UUID.randomUUID().toString();
+		librarian.setFirstName(firstName);
+		librarian.setLastName(lastName);
+		librarian.setAdress(adress);
+		librarian.setId(id);
+		librarian.setGender(gender);
+		librarian.setDeleted(false);
+		librarian.setJMBG(JMBG);
+		librarian.setUsername(username);
+		librarian.setPassword(password);
+		librarian.setPaycheck(paycheck);
+//		librarian.setLibrary(library);
+		for(Librarian l:this.getAllLibrarians()) {
+			if(l.getJMBG().equals(JMBG)||l.getUsername().equals(username)) {
+				return false;
+					
+			}	
+			
+		}
+		
+		this.getAllLibrarians().add(librarian);
+		this.writeLibrarian(this.getAllLibrarians());
+		return true;
+		
+	}
+	
+	
+	
+
+
+	public boolean updateLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+		for (Librarian librarian:this.getAllLibrarians()) {
+			if(librarian.getId().equals(id)) {
+				librarian.setFirstName(firstName);
+				librarian.setLastName(lastName);
+				librarian.setAdress(adress);
+				librarian.setId(id);
+				librarian.setGender(gender);
+				librarian.setDeleted(false);
+				librarian.setJMBG(JMBG);
+				librarian.setUsername(username);
+				librarian.setPassword(password);
+				librarian.setPaycheck(paycheck);
+//				librarian.setLibrary(library);
+				this.deleteContent("src/text/librarians.txt");
+				this.writeLibrarian(this.getAllLibrarians());	
+			}
+			
+			
+			
+		}
+		
+		
+		return true;
+		
+	}
+	
+	
+	public void deleteLibrarian(String id) {
+			
+			for(Librarian librarian:this.getAllLibrarians()) {
+				
+				if (librarian.getId().equals(id)) {
+					librarian.setDeleted(true);
+					
+				}
+				
+				this.writeLibrarian(this.getAllLibrarians());
+			}
+		}
+	
+	public void undoDeleteLibrarian(String id) {
+		
+		for(Librarian librarian:this.getAllLibrarians()) {
+			
+			if (librarian.getId().equals(id)) {
+				librarian.setDeleted(false);
+				
+			}
+			
+			this.writeLibrarian(this.getAllLibrarians());
+		}
+	}
+	
+
 	
 		
 	

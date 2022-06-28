@@ -1,19 +1,26 @@
 package gui.forms;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-
+import managers.AdminManagerWindow;
+import managers.LibrarianManagerWindow;
+import models.Admin;
 import models.Librarian;
 import models.Library;
+import models.Staff;
 
 @SuppressWarnings("serial")
 public class LibrarianWindow extends JFrame {
@@ -28,10 +35,14 @@ public class LibrarianWindow extends JFrame {
 	private JTable librarianTable;
 	
 	private Library library;
+	private Staff staff;
+	public ArrayList<Librarian>allActiveLibrarians;
 	
 	public LibrarianWindow(Library library) {
 		
 	this.library=library;
+	this.staff=staff;
+	this.allActiveLibrarians=library.allActiveLibrarians();
 	setTitle("Librarians");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -88,7 +99,68 @@ public class LibrarianWindow extends JFrame {
 //		String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
 	}
 	
-	private void initActions() {}
+	private void initActions() {
+		initAddButton();	
+		initUpdateButton();
+		initDeleteButton();
+	}
 	
+	private void initAddButton() {
+		this.btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LibrarianManagerWindow lmw=new LibrarianManagerWindow(library,staff);
+				lmw.setVisible(true);
+				initGUI();
+				
+			}
+			
+		});
+	}
+	
+	private void initUpdateButton() {
+		this.btnEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected=librarianTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					LibrarianManagerWindow lmw=new LibrarianManagerWindow(library,allActiveLibrarians.get(selected),staff);
+					lmw.setVisible(true);		
+				}
+				
+			}
+			
+		});
+			
+				
+	}
+	
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=librarianTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActiveLibrarians.get(selected).setDeleted(true);
+					library.writeLibrarian(library.getAllLibrarians());
+				}
+				
+			}
+			
+		});
+	}
 
 }

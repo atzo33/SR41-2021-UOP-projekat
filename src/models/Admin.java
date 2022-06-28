@@ -32,178 +32,176 @@ public class Admin extends Staff{
 				+ ", isDeleted=" + isDeleted + "]";
 	}
 
-	public void regNewEmployee() {
-		
-	}
-	
-	public boolean addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
-		Admin admin=new Admin();
-		String newId=UUID.randomUUID().toString();
-		admin.setFirstName(firstName);
-		admin.setLastName(lastName);
-		admin.setAdress(adress);
-		admin.setId(newId);
-		admin.setGender(gender);
-		admin.setDeleted(false);
-		admin.setJMBG(JMBG);
-		admin.setUsername(username);
-		admin.setPassword(password);
-		admin.setPaycheck(paycheck);
-		admin.setLibrary(library);
-		
-		for(Admin a:this.getLibrary().getAllAdmins()) {
-			if(a.getJMBG().equals(JMBG)||a.getUsername().equals(username)) {
-				return false;
-					
-			}	
-			
-		}
-		
-		
-		library.getAllAdmins().add(admin);
-		library.writeAdmin(library.getAllAdmins());
-		return true;
-		
-	}
-		
-		public void updateAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
-			for (Admin admin:library.getAllAdmins()) {
-				if(admin.getId().equals(id)) {
-					admin.setFirstName(firstName);
-					admin.setLastName(lastName);
-					admin.setAdress(adress);
-					admin.setId(id);
-					admin.setGender(gender);
-					admin.setDeleted(false);
-					admin.setJMBG(JMBG);
-					admin.setUsername(username);
-					admin.setPassword(password);
-					admin.setPaycheck(paycheck);
-					admin.setLibrary(library);
-					library.deleteContent("src/text/admins.txt");
-					library.writeAdmin(library.getAllAdmins());	
-				}
-				
-				
-				
-			}
-			
-		}
-		
-	public void deleteAdmin(String id) {
-		
-		for(Admin admin:library.getAllAdmins()) {
-			
-			if (admin.getId().equals(id)) {
-				admin.setDeleted(true);
-				
-			}
-			
-			library.writeAdmin(library.getAllAdmins());
-		}
-	}
-	
-	public void undoDeleteAdmin(String id) {
-			
-			for(Admin admin:library.getAllAdmins()) {
-				
-				if (admin.getId().equals(id)) {
-					admin.setDeleted(false);
-					
-				}
-				
-				library.writeAdmin(library.getAllAdmins());
-			}
-		}
 	
 	
+//	public boolean addNewAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+//		Admin admin=new Admin();
+//		String newId=UUID.randomUUID().toString();
+//		admin.setFirstName(firstName);
+//		admin.setLastName(lastName);
+//		admin.setAdress(adress);
+//		admin.setId(newId);
+//		admin.setGender(gender);
+//		admin.setDeleted(false);
+//		admin.setJMBG(JMBG);
+//		admin.setUsername(username);
+//		admin.setPassword(password);
+//		admin.setPaycheck(paycheck);
+//		admin.setLibrary(library);
+//		
+//		for(Admin a:this.getLibrary().getAllAdmins()) {
+//			if(a.getJMBG().equals(JMBG)||a.getUsername().equals(username)) {
+//				return false;
+//					
+//			}	
+//			
+//		}
+//		
+//		
+//		library.getAllAdmins().add(admin);
+//		library.writeAdmin(library.getAllAdmins());
+//		return true;
+//		
+//	}
+//		
+//		public void updateAdmin(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+//			for (Admin admin:library.getAllAdmins()) {
+//				if(admin.getId().equals(id)) {
+//					admin.setFirstName(firstName);
+//					admin.setLastName(lastName);
+//					admin.setAdress(adress);
+//					admin.setId(id);
+//					admin.setGender(gender);
+//					admin.setDeleted(false);
+//					admin.setJMBG(JMBG);
+//					admin.setUsername(username);
+//					admin.setPassword(password);
+//					admin.setPaycheck(paycheck);
+//					admin.setLibrary(library);
+//					library.deleteContent("src/text/admins.txt");
+//					library.writeAdmin(library.getAllAdmins());	
+//				}
+//				
+//				
+//				
+//			}
+//			
+//		}
+//		
+//	public void deleteAdmin(String id) {
+//		
+//		for(Admin admin:library.getAllAdmins()) {
+//			
+//			if (admin.getId().equals(id)) {
+//				admin.setDeleted(true);
+//				
+//			}
+//			
+//			library.writeAdmin(library.getAllAdmins());
+//		}
+//	}
+//	
+//	public void undoDeleteAdmin(String id) {
+//			
+//			for(Admin admin:library.getAllAdmins()) {
+//				
+//				if (admin.getId().equals(id)) {
+//					admin.setDeleted(false);
+//					
+//				}
+//				
+//				library.writeAdmin(library.getAllAdmins());
+//			}
+//		}
+//	
 	
-	public boolean addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
-		Librarian librarian=new Librarian();
-		String newId=UUID.randomUUID().toString();
-		librarian.setFirstName(firstName);
-		librarian.setLastName(lastName);
-		librarian.setAdress(adress);
-		librarian.setId(id);
-		librarian.setGender(gender);
-		librarian.setDeleted(false);
-		librarian.setJMBG(JMBG);
-		librarian.setUsername(username);
-		librarian.setPassword(password);
-		librarian.setPaycheck(paycheck);
-		librarian.setLibrary(library);
-		for(Librarian l:this.getLibrary().getAllLibrarians()) {
-			if(l.getJMBG().equals(JMBG)||l.getUsername().equals(username)) {
-				return false;
-					
-			}	
-			
-		}
-		
-		library.getAllLibrarians().add(librarian);
-		library.writeLibrarian(library.getAllLibrarians());
-		return true;
-		
-	}
 	
-	
-	
-
-
-	public void updateLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
-		for (Librarian librarian:this.getLibrary().getAllLibrarians()) {
-			if(librarian.getId().equals(id)) {
-				librarian.setFirstName(firstName);
-				librarian.setLastName(lastName);
-				librarian.setAdress(adress);
-				librarian.setId(id);
-				librarian.setGender(gender);
-				librarian.setDeleted(false);
-				librarian.setJMBG(JMBG);
-				librarian.setUsername(username);
-				librarian.setPassword(password);
-				librarian.setPaycheck(paycheck);
-				librarian.setLibrary(library);
-				library.deleteContent("src/text/librarians.txt");
-				library.writeLibrarian(library.getAllLibrarians());	
-			}
-			
-			
-			
-		}
-		
-		
-		
-		
-	}
-	
-	
-	public void deleteLibrarian(String id) {
-			
-			for(Librarian librarian:library.getAllLibrarians()) {
-				
-				if (librarian.getId().equals(id)) {
-					librarian.setDeleted(true);
-					
-				}
-				
-				library.writeLibrarian(library.getAllLibrarians());
-			}
-		}
-	
-	public void undoDeleteLibrarian(String id) {
-		
-		for(Librarian librarian:library.getAllLibrarians()) {
-			
-			if (librarian.getId().equals(id)) {
-				librarian.setDeleted(false);
-				
-			}
-			
-			library.writeLibrarian(library.getAllLibrarians());
-		}
-	}
-	
+//	public boolean addNewLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+//		Librarian librarian=new Librarian();
+//		String newId=UUID.randomUUID().toString();
+//		librarian.setFirstName(firstName);
+//		librarian.setLastName(lastName);
+//		librarian.setAdress(adress);
+//		librarian.setId(id);
+//		librarian.setGender(gender);
+//		librarian.setDeleted(false);
+//		librarian.setJMBG(JMBG);
+//		librarian.setUsername(username);
+//		librarian.setPassword(password);
+//		librarian.setPaycheck(paycheck);
+//		librarian.setLibrary(library);
+//		for(Librarian l:this.getLibrary().getAllLibrarians()) {
+//			if(l.getJMBG().equals(JMBG)||l.getUsername().equals(username)) {
+//				return false;
+//					
+//			}	
+//			
+//		}
+//		
+//		library.getAllLibrarians().add(librarian);
+//		library.writeLibrarian(library.getAllLibrarians());
+//		return true;
+//		
+//	}
+//	
+//	
+//	
+//
+//
+//	public void updateLibrarian(String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck) {
+//		for (Librarian librarian:this.getLibrary().getAllLibrarians()) {
+//			if(librarian.getId().equals(id)) {
+//				librarian.setFirstName(firstName);
+//				librarian.setLastName(lastName);
+//				librarian.setAdress(adress);
+//				librarian.setId(id);
+//				librarian.setGender(gender);
+//				librarian.setDeleted(false);
+//				librarian.setJMBG(JMBG);
+//				librarian.setUsername(username);
+//				librarian.setPassword(password);
+//				librarian.setPaycheck(paycheck);
+//				librarian.setLibrary(library);
+//				library.deleteContent("src/text/librarians.txt");
+//				library.writeLibrarian(library.getAllLibrarians());	
+//			}
+//			
+//			
+//			
+//		}
+//		
+//		
+//		
+//		
+//	}
+//	
+//	
+//	public void deleteLibrarian(String id) {
+//			
+//			for(Librarian librarian:library.getAllLibrarians()) {
+//				
+//				if (librarian.getId().equals(id)) {
+//					librarian.setDeleted(true);
+//					
+//				}
+//				
+//				library.writeLibrarian(library.getAllLibrarians());
+//			}
+//		}
+//	
+//	public void undoDeleteLibrarian(String id) {
+//		
+//		for(Librarian librarian:library.getAllLibrarians()) {
+//			
+//			if (librarian.getId().equals(id)) {
+//				librarian.setDeleted(false);
+//				
+//			}
+//			
+//			library.writeLibrarian(library.getAllLibrarians());
+//		}
+//	}
+//	
 	
 //	public boolean addNewMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
 //		Member member=new Member();

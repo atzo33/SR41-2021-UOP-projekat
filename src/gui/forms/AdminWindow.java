@@ -1,19 +1,25 @@
 package gui.forms;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-
+import managers.AdminManagerWindow;
+import managers.MemberManagerWindow;
 import models.Admin;
 import models.Library;
+import models.Staff;
 
 
 @SuppressWarnings("serial")
@@ -29,10 +35,14 @@ public class AdminWindow extends JFrame {
 	private JTable adminTable;
 	
 	private Library library;
+	private Staff staff;
+	public ArrayList<Admin>allActiveAdmins;
 	
 	public AdminWindow(Library library) {
 		
 	this.library=library;
+	this.staff=staff;
+	this.allActiveAdmins=library.allActiveAdmins();
 	setTitle("Admins");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -89,6 +99,69 @@ public class AdminWindow extends JFrame {
 //		String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
 	}
 	
-	private void initActions() {}
+	private void initActions() {
+		initAddButton();	
+		initUpdateButton();
+		initDeleteButton();
+	}
+	
+	private void initAddButton() {
+		this.btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AdminManagerWindow amw=new AdminManagerWindow(library,staff);
+				amw.setVisible(true);
+				initGUI();
+				
+			}
+			
+		});
+	}
+	
+	
+	private void initUpdateButton() {
+		this.btnEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected=adminTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					AdminManagerWindow amw=new AdminManagerWindow(library,allActiveAdmins.get(selected),staff);
+					amw.setVisible(true);		
+				}
+				
+			}
+			
+		});
+			
+				
+	}
+	
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=adminTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActiveAdmins.get(selected).setDeleted(true);
+					library.writeAdmin(library.getAllAdmins());
+				}
+				
+			}
+			
+		});
+	}
 
 }
