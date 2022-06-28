@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
@@ -17,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import managers.MemberManagerWindow;
 import models.Library;
 import models.Member;
+import models.Staff;
 
 
 @SuppressWarnings("serial")
@@ -35,10 +37,11 @@ public class MemberWindow extends JFrame{
 	private JTable memberTable;
 	
 	private Library library;
+	private Staff staff;
 	public ArrayList<Member>allActives;
 	
-	public MemberWindow(Library library) {
-		
+	public MemberWindow(Library library,Staff staff) {
+	this.staff=staff;	
 	this.library=library;
 	this.allActives=library.allActiveMembers();
 	setTitle("Members");
@@ -104,6 +107,7 @@ public class MemberWindow extends JFrame{
 	private void initActions() {
 	initAddButton();	
 	initUpdateButton();
+	initDeleteButton();
 		
 	}
 	private void initAddButton() {
@@ -111,8 +115,9 @@ public class MemberWindow extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MemberManagerWindow mmw=new MemberManagerWindow(library);
+				MemberManagerWindow mmw=new MemberManagerWindow(library,staff);
 				mmw.setVisible(true);
+				initGUI();
 				
 			}
 			
@@ -120,19 +125,46 @@ public class MemberWindow extends JFrame{
 	}
 	
 	private void initUpdateButton() {
-		int selected=this.memberTable.getSelectedRow();
 		this.btnEdit.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MemberManagerWindow mmw=new MemberManagerWindow(library,allActives.get(selected));
-				mmw.setVisible(true);	
+				int selected=memberTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					MemberManagerWindow mmw=new MemberManagerWindow(library,allActives.get(selected),staff);
+					mmw.setVisible(true);		
+				}
 				
 			}
 			
 		});
 			
 				
+	}
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=memberTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActives.get(selected).setDeleted(true);
+					library.writeMembers(library.getAllMembers());
+				}
+				
+			}
+			
+		});
 	}
 
 

@@ -1,5 +1,8 @@
 package managers;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -9,6 +12,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -16,11 +20,12 @@ import ennumerations.Gender;
 import models.Library;
 import models.Member;
 import models.MembershipCost;
+import models.Staff;
 import net.miginfocom.swing.MigLayout;
 
 public class MemberManagerWindow extends JFrame {
 	
-	
+	private Staff staff;
 	private Library library;
 	private Member member;
 	
@@ -54,9 +59,12 @@ public class MemberManagerWindow extends JFrame {
 	private JButton submitBtn,cancelBtn;
 	private ArrayList <MembershipCost> memberships;
 	
-	public MemberManagerWindow(Library library) {
+	public MemberManagerWindow(Library library,Staff staff) {
 		
 		this.library=library;
+		this.staff=staff;
+		this.member=null;
+		
 		this.memberships=library.allActiveMemberships();
 		setTitle("Members");
 		setSize(700, 500);
@@ -67,12 +75,14 @@ public class MemberManagerWindow extends JFrame {
 		writeLabels();
 		createEmptyFields();
 		fillPanel();
+		initButtons();
 		
 		
 	}
 	
-	public MemberManagerWindow(Library library,Member member) {
+	public MemberManagerWindow(Library library,Member member,Staff staff) {
 			
+			this.staff=staff;
 			this.library=library;
 			this.member=member;
 			this.memberships=library.allActiveMemberships();
@@ -85,6 +95,10 @@ public class MemberManagerWindow extends JFrame {
 			writeLabels();
 			createFields();
 			fillPanel();
+			initButtons();
+			jmbgField.setEditable(false);
+			cardNumberField.setEditable(false);
+			idField.setEditable(false);
 			
 			
 		}
@@ -143,7 +157,7 @@ public class MemberManagerWindow extends JFrame {
 		 membershipField.setSelectedItem(member.getMembership().getType());
 		 this.lastNameField = new JTextField(member.getLastName());
 		 this.adressField = new JTextField(member.getAdress());
-		 this.idField = new JTextField(UUID.randomUUID().toString());
+		 this.idField = new JTextField(member.getId().toString());
 		 this.genderField = new JComboBox(Gender.values());
 		 genderField.setSelectedItem(member.getGender());
 		 this.jmbgField = new JTextField(member.getJMBG());
@@ -180,6 +194,79 @@ public class MemberManagerWindow extends JFrame {
 		panel.add(genderField,"width 100%,wrap");
 		panel.add(jmbg);
 		panel.add(jmbgField,"width 100%,wrap");
+		this.submitBtn=new JButton("Submit");
+		this.cancelBtn=new JButton("Cancel");
+		panel.add(submitBtn);
+		panel.add(cancelBtn);
+	}
+	private void initCancel() {
+		this.cancelBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				setVisible(false);
+				
+				
+			}
+			
+		});
+	}
+	private void initSubmit() {
+		this.submitBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String jmbg=jmbgField.getText();
+				String id=idField.getText();
+				Gender gender=Gender.valueOf(genderField.getSelectedItem().toString());
+				String adress=adressField.getText();
+				String lastName=lastNameField.getText();
+				String firstName=firstNameField.getText();
+				int selectedMembership=membershipField.getSelectedIndex();
+				MembershipCost membership=memberships.get(selectedMembership);
+				boolean isActive=isActiveField.isSelected();
+				int membershipDuration=Integer.parseInt(membershipDurationField.getText());
+				LocalDate lastMembershipExtension=LocalDate.parse(lastMembershipExtensionField.getText());
+				String cardNumber=cardNumberField.getText();
+				boolean isDeleted=false;
+				if(member==null) {
+					if(library.addNewMember(cardNumber, lastMembershipExtension, membershipDuration, isActive, membership, firstName, lastName, adress, id, gender, isDeleted, jmbg)) {
+						System.out.println("4");
+						JOptionPane.showMessageDialog(null,"Member successfully added","Success!",JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+						setVisible(false);
+					}	
+					else {
+						JOptionPane.showMessageDialog(null,"Member not added!!","Fail :(",JOptionPane.WARNING_MESSAGE);
+
+					}
+					
+				}
+				else {
+					if(library.updateMember( lastMembershipExtension, membershipDuration, isActive, membership, firstName, lastName, adress, id, gender,isDeleted)) {
+						JOptionPane.showMessageDialog(null,"Member successfully added","Success!",JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+						setVisible(false);	
+					}
+					else {
+						JOptionPane.showMessageDialog(null,"Member not added!!","Fail :(",JOptionPane.WARNING_MESSAGE);
+
+					}
+				}
+				
+				
+				
+			}
+			
+		});
+	}
+	
+	private void initButtons() {
+		initSubmit();
+		initCancel();
+		
+		
 	}
 
 }

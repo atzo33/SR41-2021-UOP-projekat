@@ -39,12 +39,15 @@ public class MainWindow extends JFrame {
 	
 	
 	private Library library;
+	private Staff staff;
 	
 	
 	
 
 	public MainWindow(Library library,Staff loggedIn) {
 		this.library=library;
+		this.staff=loggedIn;
+		
 		
 		setTitle("Staff: " + loggedIn.getUsername());
 		setSize(700, 700);
@@ -103,7 +106,7 @@ public class MainWindow extends JFrame {
 		memberMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MemberWindow mw = new MemberWindow(library);
+				MemberWindow mw = new MemberWindow(library,staff);
 				mw.setVisible(true);
 			}
 		});

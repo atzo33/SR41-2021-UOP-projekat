@@ -1,5 +1,8 @@
 package models;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 import ennumerations.Gender;
 
 public abstract class Staff extends User {
@@ -68,10 +71,7 @@ public abstract class Staff extends User {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public void addMember() {
-		
-	}
-
+	
 
 	public Library getLibrary() {
 		return library;

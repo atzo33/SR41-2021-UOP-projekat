@@ -974,6 +974,102 @@ public class Library {
 	}
     
     
+    
+    
+// CRUD   
+    
+    public boolean addNewMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
+		Member member=new Member();
+		
+		member.setCardNumber(cardNumber);
+		member.setLastMembershipExtension(lastMembershipExtension);
+		member.setMembershipDuration(membershipDuration);
+		member.setActive(true);
+		member.setMembership(membership);
+		member.setFirstName(firstName);
+		member.setLastName(lastName);
+		member.setAdress(adress);
+		member.setId(id);
+		member.setGender(gender);
+		member.setDeleted(false);
+		member.setJMBG(JMBG);
+		for(Member m:this.getAllMembers()) {
+			if(m.getJMBG().equals(JMBG)||m.getCardNumber().equals(cardNumber)) {
+				
+				return false;
+				
+				
+			}
+			
+		}
+		System.out.println("2");
+		this.getAllMembers().add(member);
+		this.writeMembers(this.getAllMembers());
+		
+		return true;
+		
+	}
+	
+	
+	public boolean updateMember( LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted) {
+		
+		for (Member member:this.getAllMembers()) {
+			if(member.getId().equals(id)) {
+				
+				
+				member.setLastMembershipExtension(lastMembershipExtension);
+				member.setMembershipDuration(membershipDuration);
+				member.setActive(true);
+				member.setMembership(membership);
+				member.setFirstName(firstName);
+				member.setLastName(lastName);
+				member.setAdress(adress);
+				member.setId(id);
+				member.setGender(gender);
+				member.setDeleted(false);
+				
+				
+				System.out.println("test2");
+			}
+		}
+		System.out.println("test3");
+		this.writeMembers(this.getAllMembers());	
+		return true;
+	}
+	
+	
+	public void deleteMember(String id) {
+		
+		for(Member member:this.getAllMembers()) {
+			
+			if (member.getId().equals(id)) {
+				member.setDeleted(true);
+				
+			}
+			
+			this.writeMembers(this.getAllMembers());
+		}
+	}
+	
+public void undoDeleteMember(String id) {
+		
+		for(Member member:this.getAllMembers()) {
+			
+			if (member.getId().equals(id)) {
+				member.setDeleted(false);
+				
+			}
+			
+			this.writeMembers(this.getAllMembers());
+		}
+	}
+	
+		
+	
+	
+	
+    
+    
    
     
     

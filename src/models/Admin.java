@@ -205,99 +205,99 @@ public class Admin extends Staff{
 	}
 	
 	
-	public boolean addNewMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
-		Member member=new Member();
-		String newId=UUID.randomUUID().toString();
-		member.setCardNumber(cardNumber);
-		member.setLastMembershipExtension(lastMembershipExtension);
-		member.setMembershipDuration(membershipDuration);
-		member.setActive(true);
-		member.setMembership(membership);
-		member.setFirstName(firstName);
-		member.setLastName(lastName);
-		member.setAdress(adress);
-		member.setId(newId);
-		member.setGender(gender);
-		member.setDeleted(false);
-		member.setJMBG(JMBG);
-		for(Member m:this.getLibrary().getAllMembers()) {
-			if(m.getJMBG().equals(JMBG)||m.getCardNumber().equals(cardNumber)) {
-				return false;
-				
-				
-			}
-			
-		}
-		library.getAllMembers().add(member);
-		library.writeMembers(library.getAllMembers());
-		return true;
-		
-	}
-	
-	
-	public void updateMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
-		for (Member member:library.getAllMembers()) {
-			if(member.getId().equals(id)) {
-				member.setCardNumber(cardNumber);
-				member.setLastMembershipExtension(lastMembershipExtension);
-				member.setMembershipDuration(membershipDuration);
-				member.setActive(true);
-				member.setMembership(membership);
-				member.setFirstName(firstName);
-				member.setLastName(lastName);
-				member.setAdress(adress);
-				member.setId(id);
-				member.setGender(gender);
-				member.setDeleted(false);
-				member.setJMBG(JMBG);
-				
-				library.writeMembers(library.getAllMembers());	
-			}
-			
-			
-			
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	}
-	
-	
-	public void deleteMember(String id) {
-		
-		for(Member member:this.getLibrary().getAllMembers()) {
-			
-			if (member.getId().equals(id)) {
-				member.setDeleted(true);
-				
-			}
-			
-			library.writeMembers(library.getAllMembers());
-		}
-	}
-	
-public void undoDeleteMember(String id) {
-		
-		for(Member member:this.getLibrary().getAllMembers()) {
-			
-			if (member.getId().equals(id)) {
-				member.setDeleted(false);
-				
-			}
-			
-			library.writeMembers(library.getAllMembers());
-		}
-	}
-	
-	
+//	public boolean addNewMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
+//		Member member=new Member();
+//		String newId=UUID.randomUUID().toString();
+//		member.setCardNumber(cardNumber);
+//		member.setLastMembershipExtension(lastMembershipExtension);
+//		member.setMembershipDuration(membershipDuration);
+//		member.setActive(true);
+//		member.setMembership(membership);
+//		member.setFirstName(firstName);
+//		member.setLastName(lastName);
+//		member.setAdress(adress);
+//		member.setId(newId);
+//		member.setGender(gender);
+//		member.setDeleted(false);
+//		member.setJMBG(JMBG);
+//		for(Member m:this.getLibrary().getAllMembers()) {
+//			if(m.getJMBG().equals(JMBG)||m.getCardNumber().equals(cardNumber)) {
+//				return false;
+//				
+//				
+//			}
+//			
+//		}
+//		library.getAllMembers().add(member);
+//		library.writeMembers(library.getAllMembers());
+//		return true;
+//		
+//	}
+//	
+//	
+//	public void updateMember(String cardNumber, LocalDate lastMembershipExtension, int membershipDuration, boolean isActive,MembershipCost membership,String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG) {
+//		for (Member member:library.getAllMembers()) {
+//			if(member.getId().equals(id)) {
+//				member.setCardNumber(cardNumber);
+//				member.setLastMembershipExtension(lastMembershipExtension);
+//				member.setMembershipDuration(membershipDuration);
+//				member.setActive(true);
+//				member.setMembership(membership);
+//				member.setFirstName(firstName);
+//				member.setLastName(lastName);
+//				member.setAdress(adress);
+//				member.setId(id);
+//				member.setGender(gender);
+//				member.setDeleted(false);
+//				member.setJMBG(JMBG);
+//				
+//				library.writeMembers(library.getAllMembers());	
+//			}
+//			
+//			
+//			
+//		}
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//	}
+//	
+//	
+//	public void deleteMember(String id) {
+//		
+//		for(Member member:this.getLibrary().getAllMembers()) {
+//			
+//			if (member.getId().equals(id)) {
+//				member.setDeleted(true);
+//				
+//			}
+//			
+//			library.writeMembers(library.getAllMembers());
+//		}
+//	}
+//	
+//public void undoDeleteMember(String id) {
+//		
+//		for(Member member:this.getLibrary().getAllMembers()) {
+//			
+//			if (member.getId().equals(id)) {
+//				member.setDeleted(false);
+//				
+//			}
+//			
+//			library.writeMembers(library.getAllMembers());
+//		}
+//	}
+//	
+//	
 	
 	public boolean addNewMembership(String id, String type, double price,boolean isDeleted) {
 		MembershipCost membership=new MembershipCost();
