@@ -139,7 +139,7 @@ public class LibrarianManagerWindow extends JFrame {
 		this.firstNameField = new JTextField(librarian.getFirstName());
 		 this.lastNameField = new JTextField(librarian.getLastName());
 		 this.adressField = new JTextField(librarian.getAdress());
-		 this.idField = new JTextField(UUID.randomUUID().toString());
+		 this.idField = new JTextField(librarian.getId());
 		 this.genderField = new JComboBox(Gender.values());
 		 this.jmbgField = new JTextField(librarian.getJMBG());
 		 this.usernameField = new JTextField(librarian.getUsername());

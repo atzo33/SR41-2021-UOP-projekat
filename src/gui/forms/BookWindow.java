@@ -1,17 +1,21 @@
 package gui.forms;
 
 import java.awt.BorderLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import managers.BookManagerWindow;
 import models.Book;
 import models.Library;
 
@@ -28,10 +32,12 @@ public class BookWindow extends JFrame{
 	private JTable bookTable;
 	
 	private Library library;
+	private ArrayList<Book>allActiveBooks;
 	
 	public BookWindow(Library library) {
 		
 	this.library=library;
+	this.allActiveBooks=library.allActiveBooks();
 	setTitle("Librarians");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -89,7 +95,70 @@ public class BookWindow extends JFrame{
 
 	}
 	
-	private void initActions() {}
+	private void initActions() {
+		initAddButton();	
+		initUpdateButton();
+		initDeleteButton();
+	}
+	
+	private void initAddButton() {
+		this.btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				BookManagerWindow bmw=new BookManagerWindow(library);
+				bmw.setVisible(true);
+				initGUI();
+				
+			}
+			
+		});
+		
+		
+	}
+	
+	private void initUpdateButton() {
+		this.btnEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected=bookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					BookManagerWindow bmw=new BookManagerWindow(library,allActiveBooks.get(selected));
+					bmw.setVisible(true);		
+				}
+				
+			}
+			
+		});
+			
+	}
+	
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=bookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActiveBooks.get(selected).setDeleted(true);
+					library.writeBook(library.getAllBooks());
+				}
+				
+			}
+			
+		});
+	}
 	
 	
 

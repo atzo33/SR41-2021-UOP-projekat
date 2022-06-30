@@ -1,2 +1,3 @@
-firstName|lastName|adress|id|MALE|false|JMBG|username|password|10.0
+firstName|Promjena2|adress|id|MALE|false|JMBG|username|password|10.0
 asf|asfas|asfaf|3ff6588d-6678-4038-9599-399f0359862c|MALE|true|asfas|asfasf|asfasf|555.0
+Stefan|Popic|saaas|f3280704-b5b1-4714-8e80-3ec2ff50e9f8|MALE|false|5185181515|stefan|stefan|5.0

@@ -1,1 +1,2 @@
-45986|Full|15.0|false
+45986|Full|15.0|true
+5077a708-799a-4981-ab5e-4799c26107ab|Puna|522.0|false

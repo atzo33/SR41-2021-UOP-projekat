@@ -142,7 +142,7 @@ public class AdminManagerWindow extends JFrame {
 		this.firstNameField = new JTextField(admin.getFirstName());
 		 this.lastNameField = new JTextField(admin.getLastName());
 		 this.adressField = new JTextField(admin.getAdress());
-		 this.idField = new JTextField(UUID.randomUUID().toString());
+		 this.idField = new JTextField(admin.getId());
 		 this.genderField = new JComboBox(Gender.values());
 		 this.jmbgField = new JTextField(admin.getJMBG());
 		 this.usernameField = new JTextField(admin.getUsername());

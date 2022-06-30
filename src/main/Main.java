@@ -14,7 +14,8 @@ import models.*;
 public class Main {
 
 	public static void main(String[] args) {
-		Library library=new Library("Library of Atzo", "Varraghova 14", "non-stop", "1-234567-789", "789456");
+//		Library library=new Library("Library of Atzo", "Varraghova 14", "non-stop", "1-234567-789", "789456");
+		Library library=Library.readLibrary();
 		library.readAdmin();
 		library.readGenres();
 		library.readBook();

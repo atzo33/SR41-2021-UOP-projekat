@@ -1,18 +1,21 @@
 package gui.forms;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-
-
+import managers.CopyOfABookManagerWindow;
 import models.CopyOfABook;
 import models.Library;
 
@@ -27,12 +30,14 @@ public class CopyOfABookWindow extends JFrame {
 	
 	private DefaultTableModel tableModel;
 	private JTable copyOfABookTable;
+	public ArrayList<CopyOfABook>allActiveCopies;
 	
 	private Library library;
 	
 	public CopyOfABookWindow(Library library) {
 		
 	this.library=library;
+	this.allActiveCopies=library.allActiveCopies();
 	setTitle("Librarians");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -90,6 +95,70 @@ public class CopyOfABookWindow extends JFrame {
 //		String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
 	}
 	
-	private void initActions() {}
+	private void initActions() {
+		initAddButton();	
+		initUpdateButton();
+		initDeleteButton();
+	}
+	
+	
+	private void initAddButton() {
+		this.btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CopyOfABookManagerWindow comw=new CopyOfABookManagerWindow(library);
+				comw.setVisible(true);
+				initGUI();
+				
+			}
+			
+		});
+	}
+	
+	
+	private void initUpdateButton() {
+		this.btnEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected=copyOfABookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					CopyOfABookManagerWindow comw=new CopyOfABookManagerWindow(library,allActiveCopies.get(selected));
+					comw.setVisible(true);		
+				}
+				
+			}
+			
+		});
+			
+				
+	}
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=copyOfABookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActiveCopies.get(selected).setDeleted(true);
+					library.writeCopyOfABook(library.getAllCopies());
+				}
+				
+			}
+			
+		});
+	}
 	
 }
+

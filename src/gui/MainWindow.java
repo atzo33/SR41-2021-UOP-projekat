@@ -3,10 +3,13 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-
+import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import gui.forms.AdminWindow;
 import gui.forms.BookWindow;
@@ -19,6 +22,7 @@ import gui.forms.RentABookWindow;
 import models.Admin;
 import models.Library;
 import models.Staff;
+import net.miginfocom.swing.MigLayout;
 
 
 
@@ -36,6 +40,17 @@ public class MainWindow extends JFrame {
 	private JMenuItem rentABookMenu = new JMenuItem("RentABook");
 	private JMenuItem copyOfABookMenu = new JMenuItem("CopyOfABook");
 
+	private JPanel libraryPanel;
+	private JLabel name;
+	private JLabel workingHours;
+	private JLabel adress;
+	private JLabel phoneNumber;
+	
+	private JTextField nameField;
+	private JTextField workingHoursField;
+	private JTextField adressField;
+	private JTextField phoneNumberField;
+	private JButton updateLibrary;
 	
 	
 	private Library library;
@@ -54,11 +69,21 @@ public class MainWindow extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
-		initMenu();
-		initActions();
+		if(staff instanceof Admin) {
+			initAdminMenu();
+			initAdminActions();
+			initActions();
+			initLibrary();
+			initLibraryUpdate();
+		}
+		else {
+			initLibrarianMenu();
+			initActions();
+			initLibrary();
+		}
 	}
 	
-	private void initMenu() {
+	private void initAdminMenu() {
 		setJMenuBar(mainMenu);
 		mainMenu.add(adminMenu);
 		mainMenu.add(librarianMenu);
@@ -68,14 +93,27 @@ public class MainWindow extends JFrame {
 		mainMenu.add(membershipCostMenu);
 		mainMenu.add(rentABookMenu);
 		mainMenu.add(copyOfABookMenu);
+		
 	}
-	
-	private void initActions() {
+	private void initLibrarianMenu() {
+		setJMenuBar(mainMenu);
+		
+		mainMenu.add(bookMenu);
+		mainMenu.add(genreMenu);
+		mainMenu.add(memberMenu);
+		mainMenu.add(membershipCostMenu);
+		mainMenu.add(rentABookMenu);
+		mainMenu.add(copyOfABookMenu);
+		
+	}
+	private void initAdminActions() {
+		
 		adminMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				AdminWindow aw = new AdminWindow(library);
 				aw.setVisible(true);
+				
 			}
 		});
 		
@@ -84,14 +122,25 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				LibrarianWindow lw = new LibrarianWindow(library);
 				lw.setVisible(true);
+				
 			}
 		});
+		
+	}
+	
+	
+	private void initActions() {
+		
+		
+		
+		
 		
 		bookMenu.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				BookWindow bw = new BookWindow(library);
 				bw.setVisible(true);
+				
 			}
 		});
 		
@@ -100,6 +149,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				GenreWindow gw = new GenreWindow(library);
 				gw.setVisible(true);
+				
 			}
 		});
 		
@@ -108,6 +158,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MemberWindow mw = new MemberWindow(library,staff);
 				mw.setVisible(true);
+				
 			}
 		});
 		
@@ -116,6 +167,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				MembershipCostWindow mcw = new MembershipCostWindow(library);
 				mcw.setVisible(true);
+				
 			}
 		});
 		
@@ -124,6 +176,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				RentABookWindow rabw = new RentABookWindow(library);
 				rabw.setVisible(true);
+				
 			}
 		});
 		
@@ -132,11 +185,71 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				CopyOfABookWindow cobw = new CopyOfABookWindow(library);
 				cobw.setVisible(true);
+				
 			}
 		});
+		
+		
+		
+		
 	
 }
+	private void initLibrary() {
+//		LibraryWindow liw = new LibraryWindow(library);
+//		liw.setVisible(true);
+//		liw.setAlwaysOnTop(true);
+		
+		libraryPanel=new JPanel(new MigLayout());
+		add(libraryPanel);
+		this.name=new JLabel("Name: ");
+		this.adress=new JLabel("Address: ");
+		this.workingHours=new JLabel("Working Hours: ");
+		this.phoneNumber= new JLabel("Phone number: ");
+		this.nameField=new JTextField(library.getName());
+		this.adressField=new JTextField(library.getAddress());
+		this.workingHoursField=new JTextField(library.getWorkingHours());
+		this.phoneNumberField=new JTextField(library.getPhoneNumber());
+		libraryPanel.add(name);
+		libraryPanel.add(nameField,"wrap,width 50%");
+		nameField.setEditable(false);
+		libraryPanel.add(adress);
+		libraryPanel.add(adressField,"wrap,width 50%");
+		adressField.setEditable(false);
+		libraryPanel.add(workingHours);
+		libraryPanel.add(workingHoursField,"wrap,width 50%");
+		workingHoursField.setEditable(false);
+		libraryPanel.add(phoneNumber);
+		libraryPanel.add(phoneNumberField,"wrap,width 50%");
+		phoneNumberField.setEditable(false);
+		
+	}
+	private void initLibraryUpdate() {
+	
+		this.updateLibrary=new JButton("Update");
+		libraryPanel.add(updateLibrary);
+		
+		nameField.setEditable(true);
+		adressField.setEditable(true);
+		workingHoursField.setEditable(true);
+		phoneNumberField.setEditable(true);
+		initUpdatable();
 	
 	
-	
+}
+	private void initUpdatable() {
+		this.updateLibrary.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name=nameField.getText();
+				String adress=adressField.getText();
+				String workingHours=workingHoursField.getText();
+				String phoneNumber=phoneNumberField.getText();
+				library.updateLibrary(name, adress, workingHours, phoneNumber);
+				
+				
+			}
+			
+		});
+	}
 }

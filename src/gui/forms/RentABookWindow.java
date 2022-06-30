@@ -1,20 +1,24 @@
 package gui.forms;
 
 import java.awt.BorderLayout;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-
+import managers.GenreManagerWindow;
+import managers.RentABookManagerWindow;
+import models.Genre;
 import models.Library;
-
 import models.RentABook;
 
 
@@ -29,12 +33,14 @@ public class RentABookWindow extends JFrame {
 	
 	private DefaultTableModel tableModel;
 	private JTable rentABookTable;
+	public ArrayList<RentABook>allActiveRents;
 	
 	private Library library;
 	
 	public RentABookWindow(Library library) {
 		
 	this.library=library;
+	this.allActiveRents=library.allActiveRents();
 	setTitle("Librarians");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -91,7 +97,66 @@ public class RentABookWindow extends JFrame {
 //		String firstName, String lastName, String adress, String id, Gender gender, boolean isDeleted,String JMBG,String username, String password, double paycheck
 	}
 	
-	private void initActions() {}
+	private void initActions() {
+		initAddButton();	
+		initUpdateButton();
+		initDeleteButton();
+	}
 	
+	private void initAddButton() {
+		this.btnAdd.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				RentABookManagerWindow rbmw=new RentABookManagerWindow(library);
+				rbmw.setVisible(true);
+				initGUI();
+				
+			}
+			
+		});
+	}
+	
+	private void initUpdateButton() {
+		this.btnEdit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selected=rentABookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					RentABookManagerWindow rbmw=new RentABookManagerWindow(library,allActiveRents.get(selected));
+					rbmw.setVisible(true);		
+				}
+				
+			}
+			
+		});
+			
+  }
+	
+	private void initDeleteButton() {
+		this.btnDelete.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				int selected=rentABookTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					JOptionPane.showMessageDialog(null,"Task successed successfully","Success!",JOptionPane.INFORMATION_MESSAGE);
+
+					allActiveRents.get(selected).setDeleted(true);
+					library.writeRentABook(library.getAllRents());
+				}
+				
+			}
+			
+		});
+	}
 
 }

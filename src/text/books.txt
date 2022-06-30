@@ -1,1 +1,2 @@
-Rat i mir|Peace and war|Tolstoy|1887-05-05|Ovo je dosadna knjiga|0000000056|00001|SERBIAN|false
+Rat i mir|Peace and war|Tolstoy|1887-05-05|Nije tolstoy|0000000056|00001|ENGLISH|true
+Acova knjiga|Atzos librum|Atzo|2020-02-02|Atzo|2bcfbc53-a36f-464d-8dad-5699348c10ee|8a2c85c6-d62f-4d34-9f03-16ed44153991|ENGLISH|false

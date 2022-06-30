@@ -270,6 +270,8 @@ public class Library {
     }
     
     
+   
+    
     
 		    
     
@@ -902,7 +904,7 @@ public class Library {
     
     
     private String preWritingLibrary() {
-        return String.format("%s|%s|%s|%s|%s\n", this.getAddress(),this.getName(),this.getPhoneNumber(),this.getWorkingHours() ,this.getId());
+        return String.format("%s|%s|%s|%s|%s\n", this.getName(),this.getAddress(),this.getPhoneNumber(),this.getWorkingHours() ,this.getId());
     }
     
     public void writeLibrary() {
@@ -926,12 +928,12 @@ public class Library {
             String line;
             while((line = reader.readLine()) != null) {
                 String[] splitLines = line.split("\\|");
-                String adress = splitLines[0];
-                String name = splitLines[1];
+                String name = splitLines[0];
+                String adress = splitLines[1];
                 String phoneNumber=splitLines[2] ;
                 String workingHours= splitLines[3];
                 String id=splitLines[4];
-                Library library = new Library(adress,name,phoneNumber,workingHours,id);
+                Library library = new Library(name,adress,phoneNumber,workingHours,id);
                 
                
                 libraryRet=library;   
@@ -973,6 +975,17 @@ public class Library {
 		}
 		return null;
 	}
+    
+    
+    public ArrayList<Staff>allActiveStaff(){
+    	ArrayList<Staff> list=new ArrayList<Staff>();
+    	for(Staff staff:this.getAllStaff()) {
+    		if(!staff.isDeleted()) {
+    			list.add(staff);
+    		}
+    	}
+    	return list;
+    }
     
     
     
@@ -1235,6 +1248,442 @@ public void undoDeleteMember(String id) {
 			this.writeLibrarian(this.getAllLibrarians());
 		}
 	}
+	
+	
+	public boolean addNewMembership(String id, String type, double price,boolean isDeleted) {
+		MembershipCost membership=new MembershipCost();
+		String newId=UUID.randomUUID().toString();
+		membership.setId(newId);
+		membership.setType(type);
+		membership.setPrice(price);
+		membership.setDeleted(isDeleted);
+		for(MembershipCost me:this.getAllTypes()) {
+			if(me.getId().equals(id)||me.getType().equals(type)) {
+				return false;
+					
+			}	
+			
+		}
+		this.getAllTypes().add(membership);
+		this.writeMembershipCost(this.getAllTypes());
+		return true;
+			
+	}
+	
+	
+	public boolean updateMembership(String id, String type, double price,boolean isDeleted) {
+		for ( MembershipCost membership:this.getAllTypes()) {
+			if(membership.getId().equals(id)) {
+				membership.setId(id);
+				membership.setType(type);
+				membership.setPrice(price);
+				membership.setDeleted(isDeleted);
+				
+				
+				
+				this.writeMembershipCost(this.getAllTypes());	
+			}
+		
+	}
+	
+	return true;
+	}
+	
+	
+	public void undoDeleteMembership(String id) {
+		
+	for(MembershipCost membership:this.getAllTypes()) {
+			
+			if (membership.getId().equals(id)) {
+				membership.setDeleted(false);
+				
+			}
+			
+			this.writeMembershipCost(this.getAllTypes());
+		}
+		
+	}
+	
+	
+	public boolean addNewBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
+			Genre genre, Language language,boolean isDeleted) {
+		
+		Book book=new Book();
+		String newId=UUID.randomUUID().toString();
+		book.setTitle(title);
+		book.setOriginalTitle(originalTitle);
+		book.setWriter(writer);
+		book.setReleaseDate(releaseDate);
+		book.setDescription(description);
+		book.setId(newId);
+		book.setGenre(genre);
+		book.setLanguage(language);
+		book.setDeleted(isDeleted);
+		
+		for(Book b:this.getAllBooks()) {
+			if(b.getId().equals(newId)||b.getDescription().equals(description)) {
+				return false;
+					
+			}	
+			
+		}
+		
+		this.getAllBooks().add(book);
+		this.writeBook(this.getAllBooks());
+		return true;
+		
+		
+	}
+	
+	
+	
+	
+	public boolean updateBook(String title, String originalTitle, String writer, LocalDate releaseDate, String description, String id,
+			Genre genre, Language language,boolean isDeleted) {
+		for ( Book book:this.getAllBooks()) {
+			if(book.getId().equals(id)) {
+				book.setTitle(title);
+				book.setOriginalTitle(originalTitle);
+				book.setWriter(writer);
+				book.setReleaseDate(releaseDate);
+				book.setDescription(description);
+				book.setId(id);
+				book.setGenre(genre);
+				book.setLanguage(language);
+				book.setDeleted(isDeleted);
+				
+				this.writeBook(this.getAllBooks());	
+			}
+		
+	}
+	return true;
+	
+	}
+	
+	
+	
+	public void deleteBook(String id) {
+		
+	for(Book book:this.getAllBooks()) {
+			
+			if (book.getId().equals(id)) {
+				book.setDeleted(true);
+				
+			}
+			
+			this.writeBook(this.getAllBooks());
+		}
+		
+	}
+	
+	
+	public void undoDeleteBook(String id) {
+		
+		for(Book book:this.getAllBooks()) {
+				
+				if (book.getId().equals(id)) {
+					book.setDeleted(false);
+					
+				}
+				
+				this.writeBook(this.getAllBooks());
+			}
+			
+		}
+	
+	
+	
+	
+	
+	public boolean addNewGenre(String name, String description, String id,boolean isDeleted) {
+		
+		Genre genre=new Genre();
+		String newId=UUID.randomUUID().toString();
+		genre.setName(name);
+		genre.setDescription(description);
+		genre.setId(newId);
+		genre.setDeleted(false);
+		
+		for(Genre g:this.getAllGenres()) {
+			if(g.getId().equals(id)||g.getDescription().equals(description)) {
+				return false;
+					
+			}	
+			
+		}
+		
+		this.getAllGenres().add(genre);
+		this.writeGenre(this.getAllGenres());
+		return true;
+		
+	}
+	
+	
+	
+	
+	public boolean updateGenre(String name, String description, String id,boolean isDeleted) {
+		for ( Genre genre:this.getAllGenres()) {
+			if(genre.getId().equals(id)) {
+				genre.setName(name);
+				genre.setDescription(description);
+				genre.setId(id);
+				genre.setDeleted(false);
+				
+				this.writeGenre(this.getAllGenres());	
+			}
+		
+	}
+		
+		return true;
+		
+	}
+	
+	
+	
+	public void deleteGenre(String id) {
+		
+		for(Genre genre:this.getAllGenres()) {
+				
+				if (genre.getId().equals(id)) {
+					genre.setDeleted(true);
+					
+				}
+				
+				this.writeGenre(this.getAllGenres());
+			}
+			
+		}
+	
+	
+	public void undoDeleteGenre(String id) {
+		
+		for(Genre genre:this.getAllGenres()) {
+				
+				if (genre.getId().equals(id)) {
+					genre.setDeleted(false);
+					
+				}
+				
+				this.writeGenre(this.getAllGenres());
+			}
+			
+		}
+	
+	
+	
+	
+	public boolean addNewCopyOfABook(int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+			Language language, boolean isDeleted) {
+		
+		CopyOfABook copyOfABook=new CopyOfABook();
+		String newId=UUID.randomUUID().toString();
+		copyOfABook.setPageNumbers(pageNumbers);
+		copyOfABook.setPrintingYear(printingYear);
+		copyOfABook.setRented(false);
+		copyOfABook.setId(newId);
+		copyOfABook.setBinding(binding);
+		copyOfABook.setBook(book);
+		copyOfABook.setLanguage(language);
+		copyOfABook.setDeleted(false);
+		
+		
+		
+		this.getAllCopies().add(copyOfABook);
+		this.writeCopyOfABook(this.getAllCopies());
+		
+		return true;
+	}
+	
+	
+	
+	
+	public boolean updateCopyOfABook(int pageNumbers, int printingYear, boolean isRented, String id, Binding binding, Book book,
+			Language language, boolean isDeleted) {
+		for ( CopyOfABook copyOfABook:this.getAllCopies()) {
+			if(copyOfABook.getId().equals(id)) {
+				
+				
+				copyOfABook.setPageNumbers(pageNumbers);
+				copyOfABook.setPrintingYear(printingYear);
+				copyOfABook.setRented(false);
+				copyOfABook.setId(id);
+				copyOfABook.setBinding(binding);
+				copyOfABook.setBook(book);
+				copyOfABook.setLanguage(language);
+				copyOfABook.setDeleted(false);
+				
+				this.writeCopyOfABook(this.getAllCopies());	
+			}
+		
+	}
+	return true;
+	}
+	
+	
+	
+	public void deleteCopyOfABook(String id) {
+		
+		for(CopyOfABook copyOfABook:this.getAllCopies()) {
+				
+				if (copyOfABook.getId().equals(id)) {
+					copyOfABook.setDeleted(true);
+					
+				}
+				
+				this.writeCopyOfABook(this.getAllCopies());
+			}
+			
+		}	
+	
+	
+public void undoDeleteCopyOfABook(String id) {
+		
+		for(CopyOfABook copyOfABook:this.getAllCopies()) {
+				
+				if (copyOfABook.getId().equals(id)) {
+					copyOfABook.setDeleted(false);
+					
+				}
+				
+				this.writeCopyOfABook(this.getAllCopies());
+			}
+			
+		}	
+	
+	
+	
+	
+	public boolean addNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+		
+		RentABook rentABook=new RentABook();
+		String newId=UUID.randomUUID().toString();
+		rentABook.setRentalDate(rentalDate);
+		rentABook.setReturningDate(returningDate);
+		rentABook.setCopyOfABook(copyOfABook);
+		rentABook.setStaff(staff);
+		rentABook.setMember(member);
+		rentABook.setDeleted(false);
+		rentABook.setId(newId);
+		
+		
+		
+		
+		this.getAllRents().add(rentABook);
+		this.writeRentABook(this.getAllRents());
+		return true;
+	}
+	
+	
+	
+	public boolean updateRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+		for ( RentABook rentABook:this.getAllRents()) {
+			if(rentABook.getId().equals(id)) {
+				
+				
+				rentABook.setRentalDate(rentalDate);
+				rentABook.setReturningDate(returningDate);
+				rentABook.setCopyOfABook(copyOfABook);
+				rentABook.setStaff(staff);
+				rentABook.setMember(member);
+				rentABook.setDeleted(false);
+				rentABook.setId(id);
+				
+				this.writeRentABook(this.getAllRents());	
+			}
+		
+	}
+		return true;
+	
+	}
+	
+	
+	
+	public void deleteRentABook(String id) {
+		
+		for(RentABook rentABook:this.getAllRents()) {
+				
+				if (rentABook.getId().equals(id)) {
+					rentABook.setDeleted(true);
+					
+				}
+				
+				this.writeRentABook(this.getAllRents());
+			}
+			
+		}	
+	
+	
+	
+	
+	
+	public void undoDeleteRentABook(String id) {
+		
+		for(RentABook rentABook:this.getAllRents()) {
+				
+				if (rentABook.getId().equals(id)) {
+					rentABook.setDeleted(false);
+					
+				}
+				
+				this.writeRentABook(this.getAllRents());
+			}
+			
+		}	
+	
+	
+	public void updateLibrary(String name, String address, String workingHours, String phoneNumber) {
+		
+				
+				this.setName(name);
+				this.setAddress(address);
+				this.setWorkingHours(workingHours);
+				this.setPhoneNumber(phoneNumber);
+				
+				this.writeLibrary();
+				
+				
+				
+				
+				
+				
+		
+	
+		
+	
+	}
+//	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	
