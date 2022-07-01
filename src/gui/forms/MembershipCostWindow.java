@@ -40,7 +40,7 @@ public class MembershipCostWindow extends JFrame {
 	
 	this.allActiveMemberships=library.allActiveMemberships();	
 	this.library=library;
-	setTitle("Librarians");
+	setTitle("Membership costs");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

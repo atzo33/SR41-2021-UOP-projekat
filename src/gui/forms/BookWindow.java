@@ -38,7 +38,7 @@ public class BookWindow extends JFrame{
 		
 	this.library=library;
 	this.allActiveBooks=library.allActiveBooks();
-	setTitle("Librarians");
+	setTitle("Books");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

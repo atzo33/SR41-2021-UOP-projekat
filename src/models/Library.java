@@ -1553,7 +1553,7 @@ public void undoDeleteCopyOfABook(String id) {
 	
 	
 	
-	public boolean addNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+	public boolean addNewRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted,String id) {
 		
 		RentABook rentABook=new RentABook();
 		String newId=UUID.randomUUID().toString();
@@ -1575,7 +1575,7 @@ public void undoDeleteCopyOfABook(String id) {
 	
 	
 	
-	public boolean updateRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted) {
+	public boolean updateRentABook(LocalDate rentalDate, LocalDate returningDate, CopyOfABook copyOfABook,Staff staff,Member member,boolean isDeleted,String id) {
 		for ( RentABook rentABook:this.getAllRents()) {
 			if(rentABook.getId().equals(id)) {
 				

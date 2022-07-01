@@ -40,7 +40,7 @@ public class GenreWindow extends JFrame {
 		
 	this.library=library;
 	this.allActiveGenres=library.allActiveGenres();
-	setTitle("Librarians");
+	setTitle("Genres");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

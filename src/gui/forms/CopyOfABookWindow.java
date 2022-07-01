@@ -38,7 +38,7 @@ public class CopyOfABookWindow extends JFrame {
 		
 	this.library=library;
 	this.allActiveCopies=library.allActiveCopies();
-	setTitle("Librarians");
+	setTitle("Copies of a book");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

@@ -15,6 +15,7 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import managers.ExtendUser;
 import managers.MemberManagerWindow;
 import models.Library;
 import models.Member;
@@ -31,18 +32,21 @@ public class MemberWindow extends JFrame{
 	private JButton btnAdd = new JButton();
 	private JButton btnEdit = new JButton();
 	private JButton btnDelete = new JButton();
+	private JButton btnMembership=new JButton();
 	
 	
 	private DefaultTableModel tableModel;
 	private JTable memberTable;
 	
 	private Library library;
+	private Member member;
 	private Staff staff;
 	public ArrayList<Member>allActives;
 	
 	public MemberWindow(Library library,Staff staff) {
 	this.staff=staff;	
 	this.library=library;
+	this.member=member;
 	this.allActives=library.allActiveMembers();
 	setTitle("Members");
 	setSize(500, 300);
@@ -59,10 +63,13 @@ public class MemberWindow extends JFrame{
 		btnEdit.setIcon(editIcon);
 		ImageIcon deleteIcon = new ImageIcon(getClass().getResource("/slike/remove.gif"));
 		btnDelete.setIcon(deleteIcon);
+		ImageIcon membershipIcon = new ImageIcon(getClass().getResource("/slike/membership.png"));
+		btnMembership.setIcon(membershipIcon);
 		
 		mainToolbar.add(btnAdd);
 		mainToolbar.add(btnEdit);
 		mainToolbar.add(btnDelete);
+		mainToolbar.add(btnMembership);
 		add(mainToolbar, BorderLayout.NORTH);
 		
 		
@@ -108,6 +115,7 @@ public class MemberWindow extends JFrame{
 	initAddButton();	
 	initUpdateButton();
 	initDeleteButton();
+	initMembershipButton();
 		
 	}
 	private void initAddButton() {
@@ -162,6 +170,27 @@ public class MemberWindow extends JFrame{
 					library.writeMembers(library.getAllMembers());
 				}
 				
+			}
+			
+		});
+	}
+	
+	private void initMembershipButton() {
+		this.btnMembership.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				int selected=memberTable.getSelectedRow();
+				if(selected==-1) {
+					JOptionPane.showMessageDialog(null,"Must select row","Fail :(",JOptionPane.WARNING_MESSAGE);	
+				}
+				else {
+					ExtendUser eu=new ExtendUser(library,allActives.get(selected));
+					eu.setVisible(true);		
+				}
+				
+			
 			}
 			
 		});

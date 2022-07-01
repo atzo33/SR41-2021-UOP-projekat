@@ -41,7 +41,7 @@ public class RentABookWindow extends JFrame {
 		
 	this.library=library;
 	this.allActiveRents=library.allActiveRents();
-	setTitle("Librarians");
+	setTitle("Rents of a book");
 	setSize(500, 300);
 	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	setLocationRelativeTo(null);

@@ -242,8 +242,6 @@ public class RentABookManagerWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				LocalDate rentalDate=LocalDate.parse(rentalDateField.getText());
 				LocalDate returningDate=LocalDate.parse(returningDateField.getText());
-			
-				
 				int selectedCopy=copyOfABookField.getSelectedIndex();
 				CopyOfABook copyOfABook=copies.get(selectedCopy);
 				int selectedStaff=staffField.getSelectedIndex();
@@ -257,7 +255,7 @@ public class RentABookManagerWindow extends JFrame {
 				
 				boolean isDeleted=false;
 				if(rentABook==null) {
-					if(library.addNewRentABook(rentalDate, returningDate, copyOfABook, staff, member, isDeleted)) {
+					if(library.addNewRentABook(rentalDate, returningDate, copyOfABook, staff, member, isDeleted,id)&&rentalDate.isBefore(returningDate)) {
 						System.out.println("4");
 						JOptionPane.showMessageDialog(null,"Rent of a book successfully added","Success!",JOptionPane.INFORMATION_MESSAGE);
 						dispose();
@@ -270,7 +268,7 @@ public class RentABookManagerWindow extends JFrame {
 					
 				}
 				else {
-					if(library.updateRentABook(rentalDate, returningDate, copyOfABook, staff, member, isDeleted)) {
+					if(library.updateRentABook(rentalDate, returningDate, copyOfABook, staff, member, isDeleted,id)) {
 						JOptionPane.showMessageDialog(null,"Rent of a book successfully added","Success!",JOptionPane.INFORMATION_MESSAGE);
 						dispose();
 						setVisible(false);	
