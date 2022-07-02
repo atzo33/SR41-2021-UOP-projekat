@@ -480,7 +480,6 @@ public class Library {
                 String cardNumber = splitLines[0];
                 LocalDate lastMembershipExtension =LocalDate.parse(splitLines[1]);
                 int membershipDuration = Integer.parseInt(splitLines[2]);
-                boolean isActive=Boolean.parseBoolean(splitLines[3]);
                 MembershipCost membership=null;
                 
                 for(MembershipCost m : this.allTypes){
@@ -498,6 +497,8 @@ public class Library {
                 boolean isDeleted=Boolean.parseBoolean(splitLines[10]);
                 String JMBG=splitLines[11];
                 
+                
+                boolean isActive=adjustActivity(lastMembershipExtension,membershipDuration);
 ////            1.String cardNumber,2. LocalDate lastMembershipExtension,3. int membershipDuration,
 //            	4. boolean isActive,5.MembershipCost membership,5.String firstName,6.
 //            	String lastName,7. String adress,8. String id,9. Gender gender,10. boolean isDeleted
@@ -528,6 +529,11 @@ public class Library {
         return allMembers;
         
     } 
+    
+    private boolean adjustActivity(LocalDate lastExtension,int duration) {
+    	return lastExtension.plusMonths(duration).isAfter(LocalDate.now());
+    	
+    }
     
     public ArrayList<Member>allActiveMembers(){
     	ArrayList<Member> list=new ArrayList<Member>();

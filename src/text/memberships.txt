@@ -1,3 +1,5 @@
 45986|Full|15.0|true
-5077a708-799a-4981-ab5e-4799c26107ab|Puna|522.0|false
-8032b297-791a-4961-8f4e-8c6958c468ce|full|250.0|false
+5077a708-799a-4981-ab5e-4799c26107ab|Za penzionere|100.0|true
+8032b297-791a-4961-8f4e-8c6958c468ce|Za djecu|150.0|false
+a6c7d966-bb81-4701-ae21-a5a5df515ad7|Ostali|250.0|false
+5a3f2afb-2d5d-4ffb-ad62-6134584ebfbe|Za pezionere|100.0|false

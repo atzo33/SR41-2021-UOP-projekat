@@ -64,7 +64,7 @@ public class LibrarianManagerWindow extends JFrame {
 		
 		
 		
-		setTitle("Admins");
+		setTitle("Librarians");
 		setSize(700, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -53,7 +53,7 @@ public class MembershipCostManagerWindow extends JFrame{
 		
 		
 		
-		setTitle("Genres");
+		setTitle("Memberships");
 		setSize(700, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);

@@ -1,4 +1,4 @@
-package models;
+ package models;
 
 import java.time.LocalDate;
 
@@ -31,7 +31,11 @@ public class Member extends User {
 		this.membershipDuration = membershipDuration;
 		this.isActive = isActive;
 		this.membership=membership;
+	
+		
 	}
+	 
+	
 	public String getCardNumber() {
 		return cardNumber;
 	}

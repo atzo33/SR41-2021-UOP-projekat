@@ -149,7 +149,7 @@ public class ExtendUser extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,"You have saved "+ExtensionPrice()+ " dollars","Success!",JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,"You have spent "+ExtensionPrice()+ " dollars","Success!",JOptionPane.INFORMATION_MESSAGE);
 				dispose();
 				ExtendUser eu=new ExtendUser(library,member);
 				eu.setVisible(false);

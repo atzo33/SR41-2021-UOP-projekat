@@ -145,6 +145,7 @@ public class MemberManagerWindow extends JFrame {
 		DefaultComboBoxModel memlist= new DefaultComboBoxModel();
 		 for(MembershipCost membership:this.memberships) {
 			 memlist.addElement(membership.getType());
+			 
 		 }
 		
 		 this.firstNameField = new JTextField(member.getFirstName());
